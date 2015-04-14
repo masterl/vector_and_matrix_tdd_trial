@@ -5,8 +5,9 @@
 #include <cmath>
 
 typedef unsigned int position_t;
+typedef double scalar_t;
 
-template <int DIMENSIONS,typename T = int>
+template <int DIMENSIONS,typename T = long int>
 class Vector
 {
     public:
@@ -25,10 +26,10 @@ class Vector
         {
             return _coordinates.at(pos);
         }
-        double distance_to(Vector<DIMENSIONS,T> const &other)
+        scalar_t distance_to(Vector<DIMENSIONS,T> const &other)
         {
-            double distance = 0.0;
-            double diff;
+            scalar_t distance = 0.0;
+            scalar_t diff;
 
             for(position_t i = 0; i < _coordinates.size(); ++i)
             {
@@ -41,6 +42,17 @@ class Vector
             distance = sqrt(distance);
 
             return distance;
+        }
+        scalar_t dot(Vector<DIMENSIONS,T> const &other)
+        {
+            scalar_t product = 0.0;
+
+            for(position_t i = 0; i < _coordinates.size(); ++i)
+            {
+                product += this->_coordinates[i] * other._coordinates[i];
+            }
+
+            return product;
         }
     private:
         std::array<T,DIMENSIONS> _coordinates;
