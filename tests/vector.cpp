@@ -146,19 +146,28 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
         test_vector_coordinates_equal(vec1,vec2);
     }
 
-    // BOOST_AUTO_TEST_CASE( calculate_cross_product_test )
-    // {
-    //     Vector<2> vec1;
-    //     Vector<2> vec2;
+    BOOST_AUTO_TEST_CASE( calculate_bidimensional_cross_product_test )
+    {
+        Vector<2> vec1;
+        Vector<2> vec2;
 
-    //     vec1.set_coordinate(0,0);
-    //     vec1.set_coordinate(1,1);
+        vec1.set_coordinate(0,1);
+        vec1.set_coordinate(1,1);
 
-    //     vec2.set_coordinate(0,4);
-    //     vec2.set_coordinate(1,5);
+        vec2.set_coordinate(0,4);
+        vec2.set_coordinate(1,5);
 
+        scalar_t product = vec1.cross(vec2);
 
-    // }
+        BOOST_CHECK_CLOSE( product, 1, 0.00001 );
+
+        vec2.set_coordinate(0,3);
+        vec2.set_coordinate(1,17);
+
+        product = vec1.cross(vec2);
+
+        BOOST_CHECK_CLOSE( product, 14, 0.00001 );
+    }
 
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

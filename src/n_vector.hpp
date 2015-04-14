@@ -68,6 +68,16 @@ class Vector
             return product;
         }
 
+        scalar_t cross(Vector<2,T> const &other) const
+        {
+            scalar_t product = 0.0;
+
+            product = this->_coordinates[0] * other._coordinates[1];
+            product -= this->_coordinates[1] * other._coordinates[0];
+
+            return product;
+        }
+
         scalar_t operator*(Vector<DIMENSIONS,T> const &other) const
         {
             return this->dot(other);
