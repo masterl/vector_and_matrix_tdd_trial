@@ -3,6 +3,7 @@
 
 #include <array>
 #include <cmath>
+#include <initializer_list>
 
 typedef unsigned int position_t;
 typedef double scalar_t;
@@ -36,6 +37,17 @@ class Vector
         T get_coordinate(position_t const &pos) const
         {
             return _coordinates.at(pos);
+        }
+
+        void set(std::initializer_list<T> values)
+        {
+            typename std::initializer_list<T>::iterator it = values.begin();
+
+            for(position_t i = 0; (i < this->_coordinates.size()) && (it != values.end()); ++i)
+            {
+                this->_coordinates[i] = *it;
+                ++it;
+            }
         }
 
         scalar_t distance_to(Vector<DIMENSIONS,T> const &other) const
@@ -77,6 +89,13 @@ class Vector
 
             return product;
         }
+
+        // Vector<3,T> cross(Vector<3,T> const &other) const
+        // {
+        //     Vector<3,T> result;
+
+        //     return result;
+        // }
 
         scalar_t operator*(Vector<DIMENSIONS,T> const &other) const
         {

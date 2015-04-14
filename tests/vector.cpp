@@ -5,16 +5,16 @@
 #include "test_utils.hpp"
 
 template <position_t DIMENSIONS,typename T>
-void test_vector_coordinates_equal(Vector<DIMENSIONS,T> const &vector1,Vector<DIMENSIONS,T> const &vector2)
+void test_vector_coordinates_equal(Vector<DIMENSIONS,T> const &values,Vector<DIMENSIONS,T> const &expected)
 {
     std::string number;
-    for(position_t i = 0; i < vector1.dimensions(); ++i)
+    for(position_t i = 0; i < values.dimensions(); ++i)
     {
         number = std::to_string(i);
-        test_uint_value(    vector2.get_coordinate(i),
-                            vector1.get_coordinate(i),
-                            "vector1.get_coordinate(" + number + ") = "
-                            "vector2.get_coordinate(" + number + ")");
+        test_uint_value(    values.get_coordinate(i),
+                            expected.get_coordinate(i),
+                            "values.get_coordinate(" + number + ") == "
+                            "expected.get_coordinate(" + number + ")");
     }
 }
 
@@ -143,7 +143,7 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
 
         vec2 = vec1;
 
-        test_vector_coordinates_equal(vec1,vec2);
+        test_vector_coordinates_equal(vec2,vec1);
     }
 
     BOOST_AUTO_TEST_CASE( calculate_bidimensional_cross_product_test )
@@ -168,6 +168,57 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
 
         BOOST_CHECK_CLOSE( product, 14, 0.00001 );
     }
+
+    BOOST_AUTO_TEST_CASE( initializer_list_set_test )
+    {
+        Vector<2> vec1;
+        Vector<2> expected1;
+
+        vec1.set({2,6,8});
+
+        expected1.set_coordinate(0,2);
+        expected1.set_coordinate(1,6);
+        // expected1.set_coordinate(2,8);
+
+        test_vector_coordinates_equal(vec1,expected1);
+
+        Vector<3> vec2;
+        Vector<3> expected2;
+
+        vec2.set({11,35,27});
+
+        expected2.set_coordinate(0,11);
+        expected2.set_coordinate(1,35);
+        expected2.set_coordinate(2,27);
+
+        test_vector_coordinates_equal(vec2,expected2);
+    }
+
+    // BOOST_AUTO_TEST_CASE( calculate_threedimensional_cross_product_test )
+    // {
+    //     Vector<3> vec1;
+    //     Vector<3> vec2;
+
+    //     vec1.set_coordinate(0,1);
+    //     vec1.set_coordinate(1,1);
+    //     vec1.set_coordinate(2,1);
+
+    //     vec2.set_coordinate(0,4);
+    //     vec2.set_coordinate(1,5);
+    //     vec2.set_coordinate(1,6);
+
+    //     Vector<3> product = vec1.cross(vec2);
+
+    //     BOOST_TEST_MESSAGE( "lixo" );
+    // }
+
+    // BOOST_AUTO_TEST_CASE( forth_or_greater_dimension_cross_product_throws_out_of_range_exception_test )
+    // {
+    //     Vector<4> vec1;
+    //     Vector<4> vec2;
+
+    //     BOOST_REQUIRE_THROW(vec1.cross(vec2), std::length_error);
+    // }
 
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
