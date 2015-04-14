@@ -116,5 +116,44 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
         BOOST_CHECK_CLOSE( vec1 * vec2, 14.0, 0.00001 );
     }
 
+    BOOST_AUTO_TEST_CASE( assignment_operator_test )
+    {
+        Vector<2> vec1;
+        Vector<2> vec2;
+
+        vec1.set_coordinate(0,0);
+        vec1.set_coordinate(1,1);
+
+        vec2.set_coordinate(0,23);
+        vec2.set_coordinate(1,89);
+
+        vec2 = vec1;
+
+        test_uint_value(    vec1.get_coordinate(0),
+                            vec2.get_coordinate(0),
+                            "vec2.get_coordinate(0) = vec1.get_coordinate(0)");
+        test_uint_value(    vec1.get_coordinate(1),
+                            vec2.get_coordinate(1),
+                            "vec2.get_coordinate(1) = vec1.get_coordinate(1)");
+    }
+
+    // BOOST_AUTO_TEST_CASE( calculate_cross_product_test )
+    // {
+    //     Vector<2> vec1;
+    //     Vector<2> vec2;
+
+    //     vec1.set_coordinate(0,0);
+    //     vec1.set_coordinate(1,1);
+
+    //     vec2.set_coordinate(0,4);
+    //     vec2.set_coordinate(1,5);
+
+    //     BOOST_CHECK_CLOSE( vec1 * vec2, 5.0, 0.00001 );
+
+    //     vec2.set_coordinate(1,14);
+
+    //     BOOST_CHECK_CLOSE( vec1 * vec2, 14.0, 0.00001 );
+    // }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

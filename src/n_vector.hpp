@@ -11,22 +11,26 @@ template <int DIMENSIONS,typename T = long int>
 class Vector
 {
     public:
-        Vector(void)
+        Vector<DIMENSIONS,T>(void)
         {
         }
+
         inline position_t dimensions(void) const
         {
             return this->_coordinates.size();
         }
+
         void set_coordinate(position_t const &pos,T const &value)
         {
             _coordinates.at(pos) = value;
         }
-        T get_coordinate(position_t const &pos)
+
+        T get_coordinate(position_t const &pos) const
         {
             return _coordinates.at(pos);
         }
-        scalar_t distance_to(Vector<DIMENSIONS,T> const &other)
+
+        scalar_t distance_to(Vector<DIMENSIONS,T> const &other) const
         {
             scalar_t distance = 0.0;
             scalar_t diff;
@@ -43,7 +47,8 @@ class Vector
 
             return distance;
         }
-        scalar_t dot(Vector<DIMENSIONS,T> const &other)
+
+        scalar_t dot(Vector<DIMENSIONS,T> const &other) const
         {
             scalar_t product = 0.0;
 
@@ -54,9 +59,20 @@ class Vector
 
             return product;
         }
-        scalar_t operator*(Vector<DIMENSIONS,T> const &other)
+
+        scalar_t operator*(Vector<DIMENSIONS,T> const &other) const
         {
             return this->dot(other);
+        }
+
+        Vector<DIMENSIONS,T> operator=(Vector<DIMENSIONS,T> const &other)
+        {
+            for(position_t i = 0; i < other._coordinates.size(); ++i)
+            {
+                this->set_coordinate(i,other._coordinates[i]);
+            }
+
+            return *this;
         }
     private:
         std::array<T,DIMENSIONS> _coordinates;
