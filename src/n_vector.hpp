@@ -54,6 +54,10 @@ class Vector
 
             return product;
         }
+        scalar_t operator*(Vector<DIMENSIONS,T> const &other)
+        {
+            return this->dot(other);
+        }
     private:
         std::array<T,DIMENSIONS> _coordinates;
 };

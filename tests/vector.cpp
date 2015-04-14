@@ -98,19 +98,23 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
         BOOST_CHECK_CLOSE( vec1.dot(vec2), 7.0, 0.00001 );
     }
 
-    // BOOST_AUTO_TEST_CASE( vector_multiplication_should_return_dot_product_test )
-    // {
-    //     Vector<2> vec1;
-    //     Vector<2> vec2;
+    BOOST_AUTO_TEST_CASE( vector_multiplication_should_return_dot_product_test )
+    {
+        Vector<2> vec1;
+        Vector<2> vec2;
 
-    //     vec1.set_coordinate(0,0);
-    //     vec1.set_coordinate(1,1);
+        vec1.set_coordinate(0,0);
+        vec1.set_coordinate(1,1);
 
-    //     vec2.set_coordinate(0,4);
-    //     vec2.set_coordinate(1,5);
+        vec2.set_coordinate(0,4);
+        vec2.set_coordinate(1,5);
 
-    //     BOOST_CHECK_CLOSE( vec1 * vec2, 5.0, 0.00001 );
-    // }
+        BOOST_CHECK_CLOSE( vec1 * vec2, 5.0, 0.00001 );
+
+        vec2.set_coordinate(1,14);
+
+        BOOST_CHECK_CLOSE( vec1 * vec2, 14.0, 0.00001 );
+    }
 
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
