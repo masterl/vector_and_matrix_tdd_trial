@@ -24,6 +24,11 @@ class Vector
             }
         }
 
+        Vector<DIMENSIONS,T>(std::initializer_list<T> values)
+        {
+            this->set(values);
+        }
+
         inline position_t dimensions(void) const
         {
             return this->_coordinates.size();

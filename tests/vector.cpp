@@ -174,11 +174,10 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
         Vector<2> vec1;
         Vector<2> expected1;
 
-        vec1.set({2,6,8});
+        vec1.set({2,6});
 
         expected1.set_coordinate(0,2);
         expected1.set_coordinate(1,6);
-        // expected1.set_coordinate(2,8);
 
         test_vector_coordinates_equal(vec1,expected1);
 
@@ -186,6 +185,50 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
         Vector<3> expected2;
 
         vec2.set({11,35,27});
+
+        expected2.set_coordinate(0,11);
+        expected2.set_coordinate(1,35);
+        expected2.set_coordinate(2,27);
+
+        test_vector_coordinates_equal(vec2,expected2);
+    }
+
+    BOOST_AUTO_TEST_CASE( initializer_list_set_should_ignore_excess_values_test )
+    {
+        Vector<2> vec1;
+        Vector<2> expected1;
+
+        vec1.set({2,6,8,15,23,30});
+
+        expected1.set_coordinate(0,2);
+        expected1.set_coordinate(1,6);
+
+        test_vector_coordinates_equal(vec1,expected1);
+
+        Vector<3> vec2;
+        Vector<3> expected2;
+
+        vec2.set({11,35,27,21,33,675,1292,4545,1221,111,1});
+
+        expected2.set_coordinate(0,11);
+        expected2.set_coordinate(1,35);
+        expected2.set_coordinate(2,27);
+
+        test_vector_coordinates_equal(vec2,expected2);
+    }
+
+    BOOST_AUTO_TEST_CASE( initializer_list_constructor_test )
+    {
+        Vector<2> vec1({2,6});
+        Vector<2> expected1;
+
+        expected1.set_coordinate(0,2);
+        expected1.set_coordinate(1,6);
+
+        test_vector_coordinates_equal(vec1,expected1);
+
+        Vector<3> vec2({11,35,27});
+        Vector<3> expected2;
 
         expected2.set_coordinate(0,11);
         expected2.set_coordinate(1,35);
