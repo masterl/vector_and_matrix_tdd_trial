@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
                             "vec.dimensions()");
     }
 
-    BOOST_AUTO_TEST_CASE( set_coordinate_0_to_1_test )
+    BOOST_AUTO_TEST_CASE( set_coordinate_test )
     {
         Vector<2> vec;
 
@@ -33,27 +33,23 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
         test_uint_value(   vec.get_coordinate(0),
                             1,
                             "vec.get_coordinate(0)");
-    }
-
-    BOOST_AUTO_TEST_CASE( set_coordinate_0_to_5_test )
-    {
-        Vector<2> vec;
 
         vec.set_coordinate(0,5);
 
         test_uint_value(   vec.get_coordinate(0),
                             5,
                             "vec.get_coordinate(0)");
-    }
-
-    BOOST_AUTO_TEST_CASE( set_coordinate_1_to_3_test )
-    {
-        Vector<2> vec;
 
         vec.set_coordinate(1,3);
 
         test_uint_value(   vec.get_coordinate(1),
                             3,
+                            "vec.get_coordinate(1)");
+
+        vec.set_coordinate(1,9);
+
+        test_uint_value(   vec.get_coordinate(1),
+                            9,
                             "vec.get_coordinate(1)");
     }
 
@@ -84,6 +80,37 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
 
         BOOST_CHECK_CLOSE( vec1.distance_to(vec2), 5.0, 0.00001 );
     }
+
+    BOOST_AUTO_TEST_CASE( calculate_dot_product_test )
+    {
+        Vector<2> vec1;
+        Vector<2> vec2;
+
+        vec1.set_coordinate(0,0);
+        vec1.set_coordinate(1,1);
+
+        vec2.set_coordinate(0,3);
+        vec2.set_coordinate(1,4);
+
+        BOOST_CHECK_CLOSE( vec1.dot(vec2), 4.0, 0.00001 );
+
+        vec2.set_coordinate(1,7);
+        BOOST_CHECK_CLOSE( vec1.dot(vec2), 7.0, 0.00001 );
+    }
+
+    // BOOST_AUTO_TEST_CASE( vector_multiplication_should_return_dot_product_test )
+    // {
+    //     Vector<2> vec1;
+    //     Vector<2> vec2;
+
+    //     vec1.set_coordinate(0,0);
+    //     vec1.set_coordinate(1,1);
+
+    //     vec2.set_coordinate(0,4);
+    //     vec2.set_coordinate(1,5);
+
+    //     BOOST_CHECK_CLOSE( vec1 * vec2, 5.0, 0.00001 );
+    // }
 
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
