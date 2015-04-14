@@ -14,6 +14,7 @@ class Vector
     public:
         Vector<DIMENSIONS,T>(void)
         {
+            _coordinates.fill(0);
         }
 
         Vector<DIMENSIONS,T>(Vector<DIMENSIONS,T> const &other)
