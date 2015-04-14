@@ -32,7 +32,7 @@ class Vector
 
         inline position_t dimensions(void) const
         {
-            return this->_coordinates.size();
+            return _coordinates.size();
         }
 
         void set_coordinate(position_t const &pos,T const &value)
@@ -49,9 +49,9 @@ class Vector
         {
             typename std::initializer_list<T>::iterator it = values.begin();
 
-            for(position_t i = 0; (i < this->_coordinates.size()) && (it != values.end()); ++i)
+            for(position_t i = 0; (i < _coordinates.size()) && (it != values.end()); ++i)
             {
-                this->_coordinates[i] = *it;
+                _coordinates[i] = *it;
                 ++it;
             }
         }
@@ -96,23 +96,33 @@ class Vector
             return product;
         }
 
-        // Vector<3,T> cross(Vector<3,T> const &other) const
-        // {
-        //     Vector<3,T> result;
+        Vector<3,T> cross(Vector<3,T> const &other) const
+        {
+            Vector<3,T> result;
+            T up, down;
+            const position_t size = _coordinates.size();
 
-        //     return result;
-        // }
+            for(position_t i = 0; i < size; ++i)
+            {
+                down = _coordinates[(i+1)%size] * other._coordinates[(i+2)%size];
+                up = _coordinates[(i+2)%size] * other._coordinates[(i+1)%size];
+
+                result.set_coordinate(i,down-up);
+            }
+
+            return result;
+        }
 
         scalar_t operator*(Vector<DIMENSIONS,T> const &other) const
         {
-            return this->dot(other);
+            return dot(other);
         }
 
         Vector<DIMENSIONS,T> operator=(Vector<DIMENSIONS,T> const &other)
         {
             for(position_t i = 0; i < other._coordinates.size(); ++i)
             {
-                this->set_coordinate(i,other._coordinates[i]);
+                set_coordinate(i,other._coordinates[i]);
             }
 
             return *this;

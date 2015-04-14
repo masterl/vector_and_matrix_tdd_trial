@@ -241,23 +241,33 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
     {
         Vector<3> vec1;
 
-        Vector<3> expected({0,0,0});
+        const Vector<3> expected({0,0,0});
 
         test_vector_coordinates_equal(vec1,expected);
     }
 
 
-    // BOOST_AUTO_TEST_CASE( calculate_threedimensional_cross_product_test )
-    // {
-    //     Vector<3> vec1({1,1,1});
-    //     Vector<3> vec2({4,5,6});
+    BOOST_AUTO_TEST_CASE( calculate_threedimensional_cross_product_test )
+    {
+        Vector<3> vec1({0,1,1});
+        Vector<3> vec2({1,-1,3});
 
-    //     Vector<3> product = vec1.cross(vec2);
+        Vector<3> product1 = vec1.cross(vec2);
 
-    //     Vector<3> expected({4,4,4});
+        const Vector<3> expected1({4,1,-1});
 
-    //     test_vector_coordinates_equal(product,expected);
-    // }
+        test_vector_coordinates_equal(product1,expected1);
+
+
+        Vector<3> vec3({3,-3,1});
+        Vector<3> vec4({4,9,2});
+
+        Vector<3> product2 = vec3.cross(vec4);
+
+        const Vector<3> expected2({-15,-2,39});
+
+        test_vector_coordinates_equal(product2,expected2);
+    }
 
     // BOOST_AUTO_TEST_CASE( forth_or_greater_dimension_cross_product_throws_out_of_range_exception_test )
     // {
