@@ -151,7 +151,11 @@ exec: rmexec allobjs FORCE | $(BINDIR)
 	@echo -e '=           Executable: $(BINDIR)/$(EXEC)  \t     ='
 	@echo -e '=----------------------------------------------------=\n\n'
 
-test: rmtest allobjs FORCE | $(BINDIR)
+test: compiletest
+	@echo -e 'Executing tests...\n'
+	@set -e;./$(BINDIR)/$(TESTEXEC) --log_level=message --build_info=yes --show_progress=true
+
+compiletest: rmtest allobjs FORCE | $(BINDIR)
 	$(CC) $(ALLOBJS) $(ALLCOMPFLAGS) -o $(BINDIR)/$(TESTEXEC) $(LINKFLAGS)
 	@echo -e '=----------------------------------------------------='
 	@echo -e '=           TESTS generated/updated                  ='
