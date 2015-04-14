@@ -7,7 +7,7 @@
 typedef unsigned int position_t;
 typedef double scalar_t;
 
-template <int DIMENSIONS,typename T = long int>
+template <position_t DIMENSIONS,typename T = long int>
 class Vector
 {
     public:
