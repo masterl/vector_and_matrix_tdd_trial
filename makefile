@@ -120,7 +120,7 @@ ALLOBJS :=	$(MAINOBJS) $(UTILSOBJS) $(TESTSOBJS)
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Executable
 #--------------------------------------------------------------------------
-EXEC := exercicio2
+EXEC := vectormatrix
 TESTEXEC := test
 
 BINDIR := bin
@@ -147,7 +147,7 @@ all:
 exec: rmexec allobjs FORCE | $(BINDIR)
 	$(CC) $(ALLOBJS) $(ALLCOMPFLAGS) -o $(BINDIR)/$(EXEC) $(LINKFLAGS)
 	@echo -e '=----------------------------------------------------='
-	@echo -e '=           $(EXEC) generated/updated             ='
+	@echo -e '=           $(EXEC) generated/updated           ='
 	@echo -e '=           Executable: $(BINDIR)/$(EXEC)  \t     ='
 	@echo -e '=----------------------------------------------------=\n\n'
 
