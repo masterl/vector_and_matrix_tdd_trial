@@ -15,6 +15,14 @@ class Vector
         {
         }
 
+        Vector<DIMENSIONS,T>(Vector<DIMENSIONS,T> const &other)
+        {
+            for(position_t i = 0; i < other._coordinates.size(); ++i)
+            {
+                this->set_coordinate(i,other._coordinates[i]);
+            }
+        }
+
         inline position_t dimensions(void) const
         {
             return this->_coordinates.size();
