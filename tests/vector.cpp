@@ -269,13 +269,5 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
         test_vector_coordinates_equal(product2,expected2);
     }
 
-    // BOOST_AUTO_TEST_CASE( forth_or_greater_dimension_cross_product_throws_out_of_range_exception_test )
-    // {
-    //     Vector<4> vec1;
-    //     Vector<4> vec2;
-
-    //     BOOST_REQUIRE_THROW(vec1.cross(vec2), std::length_error);
-    // }
-
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
