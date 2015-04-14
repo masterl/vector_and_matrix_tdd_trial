@@ -71,5 +71,19 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
         BOOST_REQUIRE_THROW(vec.set_coordinate(300,0), std::out_of_range);
     }
 
+    BOOST_AUTO_TEST_CASE( calculate_vector_distance_test )
+    {
+        Vector<2> vec1;
+        Vector<2> vec2;
+
+        vec1.set_coordinate(0,0);
+        vec1.set_coordinate(1,0);
+
+        vec2.set_coordinate(0,3);
+        vec2.set_coordinate(1,4);
+
+        BOOST_CHECK_CLOSE( vec1.distance_to(vec2), 5.0, 0.00001 );
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
