@@ -1,4 +1,5 @@
 #include "matrix.hpp"
+#include <stdexcept>
 
 #include <iostream>
 
@@ -27,32 +28,34 @@ value_t Matrix::determinant(void)
 {
     value_t result = 0.0;
 
-    if(_dimensions.first == _dimensions.second)
+    if(_dimensions.first != _dimensions.second)
     {
-        switch(_dimensions.first)
-        {
-            case 1:
-                result = (*this)[0][0];
-                break;
-            case 2:
-                result  = (*this)[0][0] * (*this)[1][1];
-                result -= (*this)[1][0] * (*this)[0][1];
-                break;
-            case 3:
-                result  = (*this)[0][0] *
-                            ( (*this)[1][1] * (*this)[2][2] -
-                              (*this)[2][1] * (*this)[1][2]
-                            );
-                result -= (*this)[0][1] *
-                            ( (*this)[1][0] * (*this)[2][2] -
-                              (*this)[2][0] * (*this)[1][2]
-                            );
-                result += (*this)[0][2]
-                            * ( (*this)[1][0] * (*this)[2][1] -
-                                (*this)[2][0] * (*this)[1][1]
-                              );
-                break;
-        }
+        throw std::domain_error("This class can only compute determinant for square matrixes!");
+    }
+
+    switch(_dimensions.first)
+    {
+        case 1:
+            result = (*this)[0][0];
+            break;
+        case 2:
+            result  = (*this)[0][0] * (*this)[1][1];
+            result -= (*this)[1][0] * (*this)[0][1];
+            break;
+        case 3:
+            result  = (*this)[0][0] *
+                        ( (*this)[1][1] * (*this)[2][2] -
+                          (*this)[2][1] * (*this)[1][2]
+                        );
+            result -= (*this)[0][1] *
+                        ( (*this)[1][0] * (*this)[2][2] -
+                          (*this)[2][0] * (*this)[1][2]
+                        );
+            result += (*this)[0][2]
+                        * ( (*this)[1][0] * (*this)[2][1] -
+                            (*this)[2][0] * (*this)[1][1]
+                          );
+            break;
     }
 
     return result;

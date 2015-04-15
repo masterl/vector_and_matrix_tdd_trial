@@ -104,5 +104,19 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         BOOST_CHECK_CLOSE( matrix.determinant(),   -306.0, 0.00001 );
     }
 
+    BOOST_AUTO_TEST_CASE( throw_domain_error_for_nonsquare_determinant_test )
+    {
+        Matrix matrix;
+
+        matrix.reset_dimensions(1,3);
+
+        matrix[0][0] =  3.0;
+        matrix[0][1] =  1.0;
+        matrix[0][2] =  6.0;
+
+
+        BOOST_REQUIRE_THROW( matrix.determinant(), std::domain_error);
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
