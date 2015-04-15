@@ -14,6 +14,8 @@ class Matrix
         Matrix(void);
         void reset_dimensions(position_t const &lines,position_t const &columns);
         MatrixDimensions dimensions(void);
+        value_t determinant(void);
+
         value_t* operator[](int const &line);
     private:
         MatrixDimensions _dimensions;

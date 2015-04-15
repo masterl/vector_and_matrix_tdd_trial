@@ -23,6 +23,27 @@ MatrixDimensions Matrix::dimensions(void)
     return _dimensions;
 }
 
+value_t Matrix::determinant(void)
+{
+    value_t result = 0.0;
+
+    if(_dimensions.first == _dimensions.second)
+    {
+        if(_dimensions.first == 1)
+        {
+            result = (*this)[0][0];
+        }
+    }
+
+    return result;
+}
+
+
+
+
+
+
+
 value_t* Matrix::operator[](int const &line)
 {
     return &(_data.get()[line*_dimensions.second]);

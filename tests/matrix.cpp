@@ -54,5 +54,20 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         BOOST_CHECK_CLOSE( matrix[1][1], 7.024, 0.00001 );
     }
 
+    BOOST_AUTO_TEST_CASE( calculate_single_determinant_test )
+    {
+        Matrix matrix;
+
+        matrix.reset_dimensions(1,1);
+
+        matrix[0][0] = 3.3;
+
+        BOOST_CHECK_CLOSE( matrix.determinant(),   3.3, 0.00001 );
+
+        matrix[0][0] = 7.1;
+
+        BOOST_CHECK_CLOSE( matrix.determinant(),   7.1, 0.00001 );
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
