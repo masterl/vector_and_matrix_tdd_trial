@@ -16,7 +16,7 @@ void test_vector_coordinates_equal(Vector<DIMENSIONS,T> const &values,Vector<DIM
     }
 }
 
-BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
+BOOST_AUTO_TEST_SUITE( VECTOR_CLASS_TEST_SUITE )
 
     BOOST_AUTO_TEST_CASE( unidimensional_vector_size_test )
     {
