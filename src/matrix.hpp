@@ -14,10 +14,12 @@ class Matrix
         Matrix(void);
         void reset_dimensions(position_t const &lines,position_t const &columns);
         MatrixDimensions dimensions(void) const;
-        value_t determinant(void);
+        value_t determinant(void) const;
 
-        value_t* operator[](int const &line);
-        Matrix operator*(Matrix &other);
+        value_t * operator[](int const &line);
+        value_t const * operator[](int const &line) const;
+
+        Matrix operator*(Matrix const &other) const;
     private:
         MatrixDimensions _dimensions;
         std::unique_ptr<value_t[]> _data;

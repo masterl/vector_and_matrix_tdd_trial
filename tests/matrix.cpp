@@ -4,7 +4,7 @@
 
 #include "test_utils.hpp"
 
-void test_matrix_equal(Matrix &values,Matrix &expected)
+void test_matrix_equal(Matrix const &values,Matrix const &expected)
 {
     MatrixDimensions values_dimensions;
     MatrixDimensions expected_dimensions;

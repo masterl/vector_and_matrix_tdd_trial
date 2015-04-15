@@ -24,7 +24,7 @@ MatrixDimensions Matrix::dimensions(void) const
     return _dimensions;
 }
 
-value_t Matrix::determinant(void)
+value_t Matrix::determinant(void) const
 {
     value_t result = 0.0;
 
@@ -67,12 +67,17 @@ value_t Matrix::determinant(void)
 
 
 
-value_t* Matrix::operator[](int const &line)
+value_t * Matrix::operator[](int const &line)
 {
-    return &(_data.get()[line*_dimensions.second]);
+    return _data.get() + (line*_dimensions.second);
 }
 
-Matrix Matrix::operator*(Matrix &other)
+value_t const * Matrix::operator[](int const &line) const
+{
+    return _data.get() + (line*_dimensions.second);
+}
+
+Matrix Matrix::operator*(Matrix const &other) const
 {
     Matrix result;
     MatrixDimensions other_dimensions;
