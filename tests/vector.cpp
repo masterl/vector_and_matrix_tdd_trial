@@ -11,10 +11,8 @@ void test_vector_coordinates_equal(Vector<DIMENSIONS,T> const &values,Vector<DIM
     for(position_t i = 0; i < values.dimensions(); ++i)
     {
         number = std::to_string(i);
-        test_uint_value(    values.get_coordinate(i),
-                            expected.get_coordinate(i),
-                            "values.get_coordinate(" + number + ") == "
-                            "expected.get_coordinate(" + number + ")");
+
+        BOOST_CHECK_CLOSE( values.get_coordinate(i), expected.get_coordinate(i), 0.00001 );
     }
 }
 
@@ -38,33 +36,34 @@ BOOST_AUTO_TEST_SUITE( VECTOR_TEST_SUITE )
                             "vec.dimensions()");
     }
 
+    BOOST_AUTO_TEST_CASE( multidimensional_vector_size_test )
+    {
+        Vector<37> vec;
+
+        test_uint_value(   vec.dimensions(),
+                            37,
+                            "vec.dimensions()");
+    }
+
     BOOST_AUTO_TEST_CASE( set_coordinate_test )
     {
         Vector<2> vec;
 
-        vec.set_coordinate(0,1);
+        vec.set_coordinate(0,1.0);
 
-        test_uint_value(   vec.get_coordinate(0),
-                            1,
-                            "vec.get_coordinate(0)");
+        BOOST_CHECK_CLOSE( vec.get_coordinate(0), 1.0, 0.00001 );
 
-        vec.set_coordinate(0,5);
+        vec.set_coordinate(0,5.5);
 
-        test_uint_value(   vec.get_coordinate(0),
-                            5,
-                            "vec.get_coordinate(0)");
+        BOOST_CHECK_CLOSE( vec.get_coordinate(0), 5.5, 0.00001 );
 
-        vec.set_coordinate(1,3);
+        vec.set_coordinate(1,3.3);
 
-        test_uint_value(   vec.get_coordinate(1),
-                            3,
-                            "vec.get_coordinate(1)");
+        BOOST_CHECK_CLOSE( vec.get_coordinate(1), 3.3, 0.00001 );
 
-        vec.set_coordinate(1,9);
+        vec.set_coordinate(1,9.2);
 
-        test_uint_value(   vec.get_coordinate(1),
-                            9,
-                            "vec.get_coordinate(1)");
+        BOOST_CHECK_CLOSE( vec.get_coordinate(1), 9.2, 0.00001 );
     }
 
     BOOST_AUTO_TEST_CASE( get_coordinate_throws_out_of_range_exception_test )

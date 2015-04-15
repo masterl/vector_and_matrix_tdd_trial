@@ -4,11 +4,12 @@
 #include <array>
 #include <cmath>
 #include <initializer_list>
+#include <type_traits>
 
 typedef unsigned int position_t;
 typedef double scalar_t;
 
-template <position_t DIMENSIONS,typename T = long int>
+template <position_t DIMENSIONS,typename T = double >
 class Vector
 {
     public:
@@ -129,6 +130,7 @@ class Vector
         }
     private:
         std::array<T,DIMENSIONS> _coordinates;
+        typename std::enable_if<std::is_floating_point<T>::value,void >::type* __class_enabler;
 };
 
 #endif

@@ -13,9 +13,8 @@ Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this 
 
 #### Vector
 - A great deal has already been done!
-- I know I didn't test for floating point coordinates, my bad...
-
-- Maybe try to limit which types can be used with the class?
+- ***Class only compiles for if T == float, double or long double ***
+- Couldn't figure out yet how to limit class to floating point without creating dummy pointer _class_enable...
 
 #### Matrix
 Pending...
