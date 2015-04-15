@@ -196,5 +196,16 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         test_matrix_equal(result, expected);
     }
 
+    BOOST_AUTO_TEST_CASE( throw_range_error_for_invalid_multiplication_test )
+    {
+        Matrix matrix1;
+        Matrix matrix2;
+
+        matrix1.reset_dimensions(2,1);
+        matrix2.reset_dimensions(3,4);
+
+        BOOST_REQUIRE_THROW( matrix1 * matrix2, std::range_error );
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

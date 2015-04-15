@@ -80,6 +80,11 @@ Matrix Matrix::operator*(Matrix &other)
 
     other_dimensions = other.dimensions();
 
+    if(_dimensions.second != other_dimensions.first)
+    {
+        throw std::range_error("First matrix column count differs from second matrix lines count!");
+    }
+
     result.reset_dimensions(_dimensions.first,other_dimensions.second);
 
     for(unsigned int i = 0; i < _dimensions.first; ++i)
