@@ -19,7 +19,7 @@ void Matrix::reset_dimensions(position_t const &lines,position_t const &columns)
     _dimensions.second = columns;
 }
 
-MatrixDimensions Matrix::dimensions(void)
+MatrixDimensions Matrix::dimensions(void) const
 {
     return _dimensions;
 }
@@ -70,4 +70,32 @@ value_t Matrix::determinant(void)
 value_t* Matrix::operator[](int const &line)
 {
     return &(_data.get()[line*_dimensions.second]);
+}
+
+Matrix Matrix::operator*(Matrix &other)
+{
+    Matrix result;
+    MatrixDimensions other_dimensions;
+    value_t sum;
+
+    other_dimensions = other.dimensions();
+
+    result.reset_dimensions(_dimensions.first,other_dimensions.second);
+
+    for(unsigned int i = 0; i < _dimensions.first; ++i)
+    {
+        for(unsigned int j = 0; j < other_dimensions.second; ++j)
+        {
+            sum = 0.0;
+
+            for(unsigned int k = 0; k < other_dimensions.second; ++k)
+            {
+                sum += (*this)[i][k] * other[k][j];
+            }
+
+            result[i][j] = sum;
+        }
+    }
+
+    return result;
 }

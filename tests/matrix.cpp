@@ -4,6 +4,35 @@
 
 #include "test_utils.hpp"
 
+void test_matrix_equal(Matrix &values,Matrix &expected)
+{
+    MatrixDimensions values_dimensions;
+    MatrixDimensions expected_dimensions;
+
+    values_dimensions = values.dimensions();
+    expected_dimensions = expected.dimensions();
+
+    if( (values_dimensions.first != expected_dimensions.first) ||
+        (values_dimensions.second != expected_dimensions.second) )
+    {
+        std::string msg;
+
+        msg = "\nCalculated matrix: ";
+        msg += std::to_string(values_dimensions.first) + "x" + std::to_string(values_dimensions.second);
+        msg = "\n  Expected matrix: ";
+        msg += std::to_string(expected_dimensions.first) + "x" + std::to_string(expected_dimensions.second);
+        throw std::range_error("Matrix dimensions differ!" + msg + "\n");
+    }
+
+    for(unsigned int i = 0; i < values_dimensions.first; ++i)
+    {
+        for(unsigned int j = 0; j < values_dimensions.first; ++j)
+        {
+            BOOST_CHECK_CLOSE( values[i][j], expected[i][j], 0.00001 );
+        }
+    }
+}
+
 BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
 
     BOOST_AUTO_TEST_CASE( matrix_size_test )
@@ -116,6 +145,55 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
 
 
         BOOST_REQUIRE_THROW( matrix.determinant(), std::domain_error);
+    }
+
+    BOOST_AUTO_TEST_CASE( calculate_1x1_matrix_multiplication_test )
+    {
+        Matrix matrix1;
+        Matrix matrix2;
+        Matrix expected;
+
+        matrix1.reset_dimensions(1,1);
+        matrix2.reset_dimensions(1,1);
+        expected.reset_dimensions(1,1);
+
+        matrix1[0][0]  =  3.0;
+        matrix2[0][0]  =  7.0;
+        expected[0][0] = 21.0;
+
+        Matrix result = matrix1 * matrix2;
+
+        test_matrix_equal(result, expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( calculate_2x2_matrix_multiplication_test )
+    {
+        Matrix matrix1;
+        Matrix matrix2;
+        Matrix expected;
+
+        matrix1.reset_dimensions(2,2);
+        matrix2.reset_dimensions(2,2);
+        expected.reset_dimensions(2,2);
+
+        matrix1[0][0]  =  3.0;
+        matrix1[0][1]  =  1.0;
+        matrix1[1][0]  =  2.0;
+        matrix1[1][1]  =  2.0;
+
+        matrix2[0][0]  =  1.0;
+        matrix2[0][1]  =  1.0;
+        matrix2[1][0]  =  4.0;
+        matrix2[1][1]  =  4.0;
+
+        expected[0][0]  =  7.0;
+        expected[0][1]  =  7.0;
+        expected[1][0]  = 10.0;
+        expected[1][1]  = 10.0;
+
+        Matrix result = matrix1 * matrix2;
+
+        test_matrix_equal(result, expected);
     }
 
 BOOST_AUTO_TEST_SUITE_END()
