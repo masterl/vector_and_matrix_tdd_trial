@@ -53,9 +53,7 @@ UTILSDIR = utils
 ifeq ($(MAKECMDGOALS),test)
 	TESTSDIR = tests
 	_ALLSRCDIRLIST = $(MAINDIR) $(UTILSDIR) $(TESTSDIR)
-endif
-
-ifeq ($(MAKECMDGOALS),exec)
+else
 	_ALLSRCDIRLIST = $(MAINDIR) $(UTILSDIR)
 endif
 
@@ -76,11 +74,11 @@ OBJDIRLIST = $(addsuffix /$(OBJDIR),$(_ALLSRCDIRLIST))
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Sources list
 #--------------------------------------------------------------------------
-ALLSRCFILES = $(foreach dir,$(_ALLSRCDIRLIST),$(wildcard $(dir)/*.cpp))
+# ALLSRCFILES = $(foreach dir,$(_ALLSRCDIRLIST),$(wildcard $(dir)/*.cpp))
 
 ifeq ($(MAKECMDGOALS),test)
 	ALLSRCFILES = $(filter-out $(foreach dir,$(_ALLSRCDIRLIST),$(wildcard $(dir)/*.cpp)) , $(MAINDIR)/main.cpp)
-	MAINFILES = $(filter-out $(wildcard $(MAINDIR)/*.cpp) , $(MAINDIR)/main.cpp )
+	MAINFILES = $(filter-out $(MAINDIR)/main.cpp , $(wildcard $(MAINDIR)/*.cpp) )
 	TESTSFILES = $(wildcard $(TESTSDIR)/*.cpp)
 endif
 
@@ -201,10 +199,10 @@ rmtest:
 	@echo -e '\tTest executable removed!'
 
 rmdeps: FORCE
-	$(foreach dir, $(DEPDIRLIST), $(call execute-command, rm -rf $(dir) ) )
+	$(foreach dir, $(DEPDIRLIST) tests/$(DEPDIR), $(call execute-command, rm -rf $(dir) ) )
 
 rmobjs: FORCE
-	$(foreach dir, $(OBJDIRLIST), $(call execute-command, rm -rf $(dir) ) )
+	$(foreach dir, $(OBJDIRLIST) tests/$(OBJDIR), $(call execute-command, rm -rf $(dir) ) )
 	
 FORCE:
 
