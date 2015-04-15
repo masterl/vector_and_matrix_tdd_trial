@@ -29,9 +29,29 @@ value_t Matrix::determinant(void)
 
     if(_dimensions.first == _dimensions.second)
     {
-        if(_dimensions.first == 1)
+        switch(_dimensions.first)
         {
-            result = (*this)[0][0];
+            case 1:
+                result = (*this)[0][0];
+                break;
+            case 2:
+                result  = (*this)[0][0] * (*this)[1][1];
+                result -= (*this)[1][0] * (*this)[0][1];
+                break;
+            case 3:
+                result  = (*this)[0][0] *
+                            ( (*this)[1][1] * (*this)[2][2] -
+                              (*this)[2][1] * (*this)[1][2]
+                            );
+                result -= (*this)[0][1] *
+                            ( (*this)[1][0] * (*this)[2][2] -
+                              (*this)[2][0] * (*this)[1][2]
+                            );
+                result += (*this)[0][2]
+                            * ( (*this)[1][0] * (*this)[2][1] -
+                                (*this)[2][0] * (*this)[1][1]
+                              );
+                break;
         }
     }
 

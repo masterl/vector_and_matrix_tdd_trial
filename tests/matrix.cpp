@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         BOOST_CHECK_CLOSE( matrix[1][1], 7.024, 0.00001 );
     }
 
-    BOOST_AUTO_TEST_CASE( calculate_single_determinant_test )
+    BOOST_AUTO_TEST_CASE( calculate_1x1_determinant_test )
     {
         Matrix matrix;
 
@@ -67,6 +67,41 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         matrix[0][0] = 7.1;
 
         BOOST_CHECK_CLOSE( matrix.determinant(),   7.1, 0.00001 );
+    }
+
+    BOOST_AUTO_TEST_CASE( calculate_2x2_determinant_test )
+    {
+        Matrix matrix;
+
+        matrix.reset_dimensions(2,2);
+
+        matrix[0][0] = 3.0;
+        matrix[0][1] = 8.0;
+        matrix[1][0] = 4.0;
+        matrix[1][1] = 6.0;
+
+
+        BOOST_CHECK_CLOSE( matrix.determinant(),   -14, 0.00001 );
+    }
+
+    BOOST_AUTO_TEST_CASE( calculate_3x3_determinant_test )
+    {
+        Matrix matrix;
+
+        matrix.reset_dimensions(3,3);
+
+        matrix[0][0] =  6.0;
+        matrix[0][1] =  1.0;
+        matrix[0][2] =  1.0;
+        matrix[1][0] =  4.0;
+        matrix[1][1] = -2.0;
+        matrix[1][2] =  5.0;
+        matrix[2][0] =  2.0;
+        matrix[2][1] =  8.0;
+        matrix[2][2] =  7.0;
+
+
+        BOOST_CHECK_CLOSE( matrix.determinant(),   -306.0, 0.00001 );
     }
 
 BOOST_AUTO_TEST_SUITE_END()

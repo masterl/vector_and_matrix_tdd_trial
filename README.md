@@ -18,3 +18,4 @@ Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this 
 
 #### Matrix
 - Basic usage done
+- Determinant for 1x1, 2x2 and 3x3 done
