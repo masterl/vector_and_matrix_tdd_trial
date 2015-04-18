@@ -25,8 +25,9 @@
 - matrix2 = matrix1
 - Determinant for NxN done
 - Generates:
-    - Minors
-    - Identity matrix
-    - Transposed
+    - Minors matrix
+    - Identity matrixes
+    - Transposed matrix
     - Cofactors matrix
     - Adjoint matrix
+    - Inverse matrix

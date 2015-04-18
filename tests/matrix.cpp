@@ -534,28 +534,28 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         test_matrix_equal(matrix,expected);
     }
 
-    // BOOST_AUTO_TEST_CASE( get_inverse_matrix_test )
-    // {
-    //     Matrix matrix;
-    //     Matrix inverse_matrix;
-    //     Matrix expected;
+    BOOST_AUTO_TEST_CASE( get_inverse_matrix_test )
+    {
+        Matrix matrix;
+        Matrix inverse_matrix;
+        Matrix expected;
 
-    //     matrix.set( {   3.0, 0.0,  2.0,
-    //                     2.0, 0.0, -2.0,
-    //                     0.0, 1.0,  1.0
-    //                 },
-    //                 3, 3);
+        matrix.set( {   3.0, 0.0,  2.0,
+                        2.0, 0.0, -2.0,
+                        0.0, 1.0,  1.0
+                    },
+                    3, 3);
 
-    //     expected.set( {  0.2,  0.2, 0.0,
-    //                     -0.2,  0.3, 1.0,
-    //                      0.2, -0.3, 0.0
-    //                 },
-    //                 3, 3);
+        expected.set( {  0.2,  0.2, 0.0,
+                        -0.2,  0.3, 1.0,
+                         0.2, -0.3, 0.0
+                    },
+                    3, 3);
 
-    //     inverse_matrix = matrix.generate_inverse();
+        inverse_matrix = matrix.generate_inverse();
 
-    //     test_matrix_equal(inverse_matrix, expected);
-    // }
+        test_matrix_equal(inverse_matrix, expected);
+    }
 
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

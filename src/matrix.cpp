@@ -226,7 +226,9 @@ Matrix Matrix::generate_inverse(void)
         throw std::domain_error("Matrix's determinant should be different than 0 to have and inverse!");
     }
 
-    return inverse_matrix;
+    inverse_matrix = this->adjoint_matrix();
+
+    return inverse_matrix/this->determinant();
 }
 
 Matrix Matrix::identity_matrix(position_t const &lines,position_t const &columns)
