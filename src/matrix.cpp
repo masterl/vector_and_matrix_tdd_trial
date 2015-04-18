@@ -1,14 +1,58 @@
 #include "matrix.hpp"
 #include <stdexcept>
+#include <cmath>
 
 #include <iostream>
 
 using std::cout;
+using std::cerr;
 using std::endl;
+using std::cin;
 
 Matrix::Matrix(void):
     _dimensions(std::make_pair(0,0))
 {
+}
+
+void Matrix::set(std::initializer_list<value_t> values,position_t const &lines,position_t const &columns)
+{
+    typename std::initializer_list<value_t>::iterator it = values.begin();
+
+    this->reset_dimensions(lines,columns);
+
+    for(position_t i = 0; (i < (lines*columns)) && (it != values.end()); ++i)
+    {
+        (*this)[0][i] = *it;
+        ++it;
+    }
+}
+
+Matrix Matrix::generate_minor(position_t const &line,position_t const &column) const
+{
+    Matrix result;
+    result.reset_dimensions(_dimensions.first-1,_dimensions.second-1);
+    position_t minor_pos = 0;
+
+    for(position_t i = 0; i < _dimensions.first; ++i)
+    {
+        if(i == line)
+        {
+            continue;
+        }
+
+        for(position_t j = 0; j < _dimensions.second; ++j)
+        {
+            if(j == column)
+            {
+                continue;
+            }
+
+            result[0][minor_pos] = (*this)[i][j];
+            ++minor_pos;
+        }
+    }
+
+    return result;
 }
 
 void Matrix::reset_dimensions(position_t const &lines,position_t const &columns)
@@ -56,14 +100,54 @@ value_t Matrix::determinant(void) const
                             (*this)[2][0] * (*this)[1][1]
                           );
             break;
+        default:
+            result = inner_determinant(*this);
+            break;
     }
 
     return result;
 }
 
+value_t Matrix::inner_determinant(Matrix const &matrix) const
+{
+    value_t result = 0.0;
+    position_t columns = matrix.dimensions().second;
+    Matrix sub_matrix;
 
+    if( (matrix.dimensions().first == 1) &&
+        (matrix.dimensions().second == 1) )
+    {
+        return matrix[0][0];
+    }
 
+    for(position_t column = 0; column < columns; ++column)
+    {
+        if( is_zero(matrix[0][column]) )
+        {
+            continue;
+        }
 
+        sub_matrix = matrix.generate_minor(0,column);
+
+        if( (column % 2) == 0)
+        {
+            result += matrix[0][column] * inner_determinant(sub_matrix);
+        }
+        else
+        {
+            result -= matrix[0][column] * inner_determinant(sub_matrix);
+        }
+    }
+
+    return result;
+}
+
+bool Matrix::is_zero(value_t const &value) const
+{
+    value_t absolute = fabs(value);
+
+    return (absolute < 0.00001);
+}
 
 
 

@@ -207,5 +207,84 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         BOOST_REQUIRE_THROW( matrix1 * matrix2, std::range_error );
     }
 
+    BOOST_AUTO_TEST_CASE( set_matrix_with_initializer_list_test )
+    {
+        Matrix expected;
+        Matrix values;
+
+        values.set( {   3.0, 2.0, 0.0,
+                        4.0, 0.0, 1.0,
+                        3.0, 0.0, 2.0
+                    },
+                    3, 3 );
+
+        expected.reset_dimensions(3,3);
+
+        expected[0][0] =  3.0;
+        expected[0][1] =  2.0;
+        expected[0][2] =  0.0;
+        expected[1][0] =  4.0;
+        expected[1][1] =  0.0;
+        expected[1][2] =  1.0;
+        expected[2][0] =  3.0;
+        expected[2][1] =  0.0;
+        expected[2][2] =  2.0;
+
+        test_matrix_equal(values,expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( generate_minor_from_4x4_test )
+    {
+        Matrix matrix;
+        Matrix expected;
+        Matrix minor;
+
+        matrix.set( {   3.0, 2.0, 0.0, 1.0,
+                        4.0, 0.0, 1.0, 2.0,
+                        3.0, 0.0, 2.0, 1.0,
+                        9.0, 2.0, 3.0, 1.0
+                    },
+                    4, 4 );
+
+        expected.set( { 3.0, 0.0, 1.0,
+                        3.0, 2.0, 1.0,
+                        9.0, 3.0, 1.0
+                    },
+                    3, 3 );
+
+        minor = matrix.generate_minor(1,1);
+
+        test_matrix_equal(minor,expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( calculate_4x4_determinant_test )
+    {
+        Matrix matrix;
+
+        matrix.set( {   3.0, 2.0, 0.0, 1.0,
+                        4.0, 0.0, 1.0, 2.0,
+                        3.0, 0.0, 2.0, 1.0,
+                        9.0, 2.0, 3.0, 1.0
+                    },
+                    4, 4 );
+
+        BOOST_CHECK_CLOSE( matrix.determinant(),   24.0, 0.00001 );
+    }
+
+    BOOST_AUTO_TEST_CASE( calculate_5x5_determinant_test )
+    {
+        Matrix matrix;
+
+        matrix.set( {   5.0, 2.0, 0.0, 0.0, -2.0,
+                        0.0, 1.0, 4.0, 3.0,  2.0,
+                        0.0, 0.0, 2.0, 6.0,  3.0,
+                        0.0, 0.0, 3.0, 4.0,  1.0,
+                        0.0, 0.0, 0.0, 0.0,  2.0
+                    },
+                    5, 5 );
+
+        BOOST_CHECK_CLOSE( matrix.determinant(),   -100.0, 0.00001 );
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

@@ -15,6 +15,9 @@ class Matrix
         void reset_dimensions(position_t const &lines,position_t const &columns);
         MatrixDimensions dimensions(void) const;
         value_t determinant(void) const;
+        void set(std::initializer_list<value_t> values,position_t const &lines,position_t const &columns);
+
+        Matrix generate_minor(position_t const &line,position_t const &column) const;
 
         value_t * operator[](int const &line);
         value_t const * operator[](int const &line) const;
@@ -24,7 +27,9 @@ class Matrix
         MatrixDimensions _dimensions;
         std::unique_ptr<value_t[]> _data;
 
+        value_t inner_determinant(Matrix const &matrix) const;
 
+        bool is_zero(value_t const &value) const;
 };
 
 #endif
