@@ -22,6 +22,8 @@
 - Matrix can be acessed by matrix[line][column]
 - matrix * scalar and matrix *= scalar
 - matrix / scalar and matrix /= scalar
+- matrix * matrix
+- matrix + matrix
 - matrix2 = matrix1
 - Determinant for NxN done
 - Generates:

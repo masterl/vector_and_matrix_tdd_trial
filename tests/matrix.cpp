@@ -196,7 +196,7 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         test_matrix_equal(result, expected);
     }
 
-    BOOST_AUTO_TEST_CASE( throw_range_error_for_invalid_multiplication_test )
+    BOOST_AUTO_TEST_CASE( throw_domain_error_for_invalid_multiplication_test )
     {
         Matrix matrix1;
         Matrix matrix2;
@@ -204,7 +204,7 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         matrix1.reset_dimensions(2,1);
         matrix2.reset_dimensions(3,4);
 
-        BOOST_REQUIRE_THROW( matrix1 * matrix2, std::range_error );
+        BOOST_REQUIRE_THROW( matrix1 * matrix2, std::domain_error );
     }
 
     BOOST_AUTO_TEST_CASE( set_matrix_with_initializer_list_test )
@@ -555,6 +555,47 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         inverse_matrix = matrix.generate_inverse();
 
         test_matrix_equal(inverse_matrix, expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( sum_two_matrixes_test )
+    {
+        Matrix matrix1;
+        Matrix matrix2;
+        Matrix result;
+        Matrix expected;
+
+        matrix1.set( {  3.0, 0.0,  2.0,
+                        2.0, 0.0, -2.0,
+                        0.0, 1.0,  1.0
+                    },
+                    3, 3);
+
+        matrix2.set( {  0.0, 3.0, -1.0,
+                        2.0, 1.0, -2.0,
+                        5.0, 2.0,  1.0
+                    },
+                    3, 3);
+
+        expected.set( {  3.0, 3.0,  1.0,
+                         4.0, 1.0, -4.0,
+                         5.0, 3.0,  2.0
+                    },
+                    3, 3);
+
+        result = matrix1 + matrix2;
+
+        test_matrix_equal(result, expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( throw_domain_error_for_invalid_sum_test )
+    {
+        Matrix matrix1;
+        Matrix matrix2;
+
+        matrix1.reset_dimensions(2,1);
+        matrix2.reset_dimensions(3,4);
+
+        BOOST_REQUIRE_THROW( matrix1 + matrix2, std::domain_error );
     }
 
 BOOST_AUTO_TEST_SUITE_END()
