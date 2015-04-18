@@ -33,6 +33,7 @@ class Matrix
 
         Matrix operator*(Matrix const &other) const;
         Matrix operator+(Matrix const &other) const;
+        Matrix operator-(Matrix const &other) const;
 
 
         Matrix operator*(value_t const &scalar) const;

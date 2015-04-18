@@ -325,6 +325,33 @@ Matrix Matrix::operator+(Matrix const &other) const
     return result;
 }
 
+Matrix Matrix::operator-(Matrix const &other) const
+{
+    Matrix result;
+
+    MatrixDimensions other_dimensions;
+
+    other_dimensions = other.dimensions();
+
+    if( (_dimensions.first != other_dimensions.first) ||
+        (_dimensions.second != other_dimensions.second) )
+    {
+        throw std::domain_error("First matrix column count differs from second matrix lines count!");
+    }
+
+    result.reset_dimensions(_dimensions.first,_dimensions.second);
+
+    for(position_t i = 0; i < _dimensions.first; ++i)
+    {
+        for(position_t j = 0; j < _dimensions.second; ++j)
+        {
+            result[i][j] = (*this)[i][j] - other[i][j];
+        }
+    }
+
+    return result;
+}
+
 Matrix Matrix::operator*(value_t const &scalar) const
 {
     Matrix result = *this;

@@ -11,7 +11,7 @@
 #### Notes:
 - Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this is just some practice programming.
 - Mostly naive implementation.
-- I gave almost no care to performance
+- I gave almost no care to performance and there's a lot of duplicated code waiting for refactor
 
 #### Vector
 - A great deal has already been done!
@@ -24,6 +24,7 @@
 - matrix / scalar and matrix /= scalar
 - matrix * matrix
 - matrix + matrix
+- matrix - matrix
 - matrix2 = matrix1
 - Determinant for NxN done
 - Generates:
