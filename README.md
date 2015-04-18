@@ -17,6 +17,8 @@ Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this 
 - Couldn't figure out yet how to limit class to floating point without creating dummy pointer _class_enable...
 
 #### Matrix
-- Basic usage done
+- Matrix can be acessed by matrix[line][column]
+- matrix * scalar and matrix *= scalar
+- matrix2 = matrix1
 - Determinant for NxN done
 - Generates minors

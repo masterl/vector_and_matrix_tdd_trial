@@ -208,22 +208,35 @@ Matrix Matrix::operator*(Matrix const &other) const
     return result;
 }
 
-// Matrix Matrix::operator*(value_t const &scalar) const
-// {
-//     Matrix result = *this;
+Matrix Matrix::operator*(value_t const &scalar) const
+{
+    Matrix result = *this;
 
-//     for(position_t line = 0; line < _dimensions.first; ++line)
-//     {
-//         for(position_t column = 0; column < _dimensions.first; ++column)
-//         {
-//             result[line][column] *= scalar;
-//         }
-//     }
+    for(position_t line = 0; line < _dimensions.first; ++line)
+    {
+        for(position_t column = 0; column < _dimensions.first; ++column)
+        {
+            result[line][column] *= scalar;
+        }
+    }
 
-//     return result;
-// }
+    return result;
+}
 
-Matrix Matrix::operator=(Matrix const &other)
+Matrix& Matrix::operator*=(value_t const &scalar)
+{
+    for(position_t line = 0; line < _dimensions.first; ++line)
+    {
+        for(position_t column = 0; column < _dimensions.first; ++column)
+        {
+            (*this)[line][column] *= scalar;
+        }
+    }
+
+    return *this;
+}
+
+Matrix& Matrix::operator=(Matrix const &other)
 {
     reset_dimensions(other.dimensions().first,other.dimensions().second);
 

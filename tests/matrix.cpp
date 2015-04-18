@@ -307,26 +307,46 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         test_matrix_equal(result,expected);
     }
 
-    // BOOST_AUTO_TEST_CASE( multiply_by_scalar_test )
-    // {
-    //     Matrix matrix;
-    //     Matrix result;
-    //     Matrix expected;
+    BOOST_AUTO_TEST_CASE( multiply_by_scalar_test )
+    {
+        Matrix matrix;
+        Matrix result;
+        Matrix expected;
 
-    //     matrix.set( {   5.0, 2.0,
-    //                     0.0, 1.0
-    //                 },
-    //                 2, 2 );
+        matrix.set( {   5.0, 2.0,
+                        0.0, 1.0
+                    },
+                    2, 2 );
 
-    //     expected.set( { 10.0, 4.0,
-    //                      0.0, 2.0
-    //                 },
-    //                 2, 2 );
+        expected.set( { 10.0, 4.0,
+                         0.0, 2.0
+                    },
+                    2, 2 );
 
-    //     result = matrix * 2;
+        result = matrix * 2;
 
-    //     test_matrix_equal(result,expected);
-    // }
+        test_matrix_equal(result,expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( multiply_and_assign_by_scalar_test )
+    {
+        Matrix matrix;
+        Matrix expected;
+
+        matrix.set( {   5.0, 2.0,
+                        0.0, 1.0
+                    },
+                    2, 2 );
+
+        expected.set( { 15.0, 6.0,
+                         0.0, 3.0
+                    },
+                    2, 2 );
+
+        matrix *= 3;
+
+        test_matrix_equal(matrix,expected);
+    }
 
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
