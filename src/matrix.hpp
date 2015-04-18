@@ -40,6 +40,8 @@ class Matrix
         Matrix& operator*=(value_t const &scalar);
         Matrix operator/(value_t const &scalar) const;
         Matrix& operator/=(value_t const &scalar);
+        Matrix operator+(value_t const &scalar) const;
+        Matrix& operator+=(value_t const &scalar);
 
         Matrix& operator=(Matrix const &other);
     private:

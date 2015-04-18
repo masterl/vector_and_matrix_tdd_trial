@@ -639,5 +639,46 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         BOOST_REQUIRE_THROW( matrix1 - matrix2, std::domain_error );
     }
 
+    BOOST_AUTO_TEST_CASE( sum_scalar_test )
+    {
+        Matrix matrix;
+        Matrix result;
+        Matrix expected;
+
+        matrix.set( {   5.0, 2.0,
+                        0.0, 1.0
+                    },
+                    2, 2 );
+
+        expected.set( { 7.0, 4.0,
+                        2.0, 3.0
+                    },
+                    2, 2 );
+
+        result = matrix + 2;
+
+        test_matrix_equal(result,expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( sum_and_assign_scalar_test )
+    {
+        Matrix matrix;
+        Matrix expected;
+
+        matrix.set( {   5.0, 2.0,
+                        0.0, 1.0
+                    },
+                    2, 2 );
+
+        expected.set( { 8.0, 5.0,
+                        3.0, 4.0
+                    },
+                    2, 2 );
+
+        matrix += 3;
+
+        test_matrix_equal(matrix,expected);
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
