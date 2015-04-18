@@ -348,5 +348,28 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         test_matrix_equal(matrix,expected);
     }
 
+    BOOST_AUTO_TEST_CASE( get_an_identity_matrix_test )
+    {
+        Matrix matrix = Matrix::identity_matrix(2,2);
+        Matrix expected;
+
+        expected.set( { 1.0, 0.0,
+                        0.0, 1.0
+                    },
+                    2, 2 );
+
+        test_matrix_equal(matrix,expected);
+
+        matrix = Matrix::identity_matrix(3,3);
+
+        expected.set( { 1.0, 0.0, 0.0,
+                        0.0, 1.0, 0.0,
+                        0.0, 0.0, 1.0
+                    },
+                    3, 3 );
+
+        test_matrix_equal(matrix,expected);
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

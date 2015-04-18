@@ -20,6 +20,8 @@ class Matrix
 
         Matrix generate_minor(position_t const &line,position_t const &column) const;
 
+        static Matrix identity_matrix(position_t const &lines,position_t const &columns);
+
         value_t * operator[](int const &line);
         value_t const * operator[](int const &line) const;
 

@@ -163,6 +163,29 @@ bool Matrix::is_zero(value_t const &value) const
     return (absolute < 0.00001);
 }
 
+Matrix Matrix::identity_matrix(position_t const &lines,position_t const &columns)
+{
+    Matrix identity;
+
+    identity.reset_dimensions(lines,columns);
+
+    for(position_t line = 0; line < lines; ++line)
+    {
+        for(position_t column = 0; column < columns; ++column)
+        {
+            if(line == column)
+            {
+                identity[line][column] = 1;
+            }
+            else
+            {
+                identity[line][column] = 0;
+            }
+        }
+    }
+
+    return identity;
+}
 
 
 value_t * Matrix::operator[](int const &line)

@@ -21,4 +21,6 @@ Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this 
 - matrix * scalar and matrix *= scalar
 - matrix2 = matrix1
 - Determinant for NxN done
-- Generates minors
+- Generates:
+    - Minors
+    - Identity matrix
