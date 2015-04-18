@@ -23,6 +23,7 @@ class Matrix
         Matrix transposed(void) const;
         Matrix& transpose(void);
         Matrix cofactor_matrix(void);
+        Matrix adjoint_matrix(void);
         Matrix inverse(void);
 
         static Matrix identity_matrix(position_t const &lines,position_t const &columns);

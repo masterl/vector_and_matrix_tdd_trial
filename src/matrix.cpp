@@ -207,6 +207,11 @@ Matrix Matrix::cofactor_matrix(void)
     return cofactors;
 }
 
+Matrix Matrix::adjoint_matrix(void)
+{
+    return this->cofactor_matrix().transpose();
+}
+
 Matrix Matrix::inverse(void)
 {
     Matrix inverse_matrix;
