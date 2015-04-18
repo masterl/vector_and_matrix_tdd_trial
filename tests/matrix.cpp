@@ -721,5 +721,42 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         test_matrix_equal(matrix,expected);
     }
 
+    BOOST_AUTO_TEST_CASE( calculate_matrix_element_division_test )
+    {
+        Matrix matrix1;
+        Matrix matrix2;
+        Matrix expected;
+
+        matrix1.set( {  3.0, 1.0,
+                        2.0, 2.0
+                    },
+                    2, 2 );
+
+        matrix2.set( {  3.0, 5.0,
+                        4.0, 8.0
+                    },
+                    2, 2 );
+
+        expected.set( { 1.0, 0.2,
+                        0.5, 0.25
+                    },
+                    2, 2 );
+
+        Matrix result = matrix1 / matrix2;
+
+        test_matrix_equal(result, expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( throw_domain_error_for_invalid_element_division_test )
+    {
+        Matrix matrix1;
+        Matrix matrix2;
+
+        matrix1.reset_dimensions(2,1);
+        matrix2.reset_dimensions(3,4);
+
+        BOOST_REQUIRE_THROW( matrix1 / matrix2, std::domain_error );
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

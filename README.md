@@ -20,14 +20,16 @@
 
 #### Matrix
 - Matrix can be acessed by matrix[line][column]
-- matrix * scalar and matrix *= scalar
-- matrix / scalar and matrix /= scalar
-- matrix + scalar and matrix += scalar
-- matrix - scalar and matrix -= scalar
-- matrix * matrix
-- matrix + matrix
-- matrix - matrix
-- matrix2 = matrix1
+- Operations defined:
+    - matrix * scalar and matrix *= scalar
+    - matrix / scalar and matrix /= scalar
+    - matrix + scalar and matrix += scalar
+    - matrix - scalar and matrix -= scalar
+    - matrix * matrix
+    - matrix / matrix (element by element division)
+    - matrix + matrix
+    - matrix - matrix
+    - matrix2 = matrix1
 - Determinant for NxN done
 - Generates:
     - Minors matrix

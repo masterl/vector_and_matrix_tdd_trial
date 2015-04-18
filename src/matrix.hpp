@@ -32,6 +32,7 @@ class Matrix
         value_t const * operator[](int const &line) const;
 
         Matrix operator*(Matrix const &other) const;
+        Matrix operator/(Matrix const &other) const;
         Matrix operator+(Matrix const &other) const;
         Matrix operator-(Matrix const &other) const;
 
