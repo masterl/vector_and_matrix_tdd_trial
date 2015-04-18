@@ -680,5 +680,46 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         test_matrix_equal(matrix,expected);
     }
 
+    BOOST_AUTO_TEST_CASE( subtract_scalar_test )
+    {
+        Matrix matrix;
+        Matrix result;
+        Matrix expected;
+
+        matrix.set( {   5.0, 2.0,
+                        0.0, 1.0
+                    },
+                    2, 2 );
+
+        expected.set( {  2.0, -1.0,
+                        -3.0, -2.0
+                    },
+                    2, 2 );
+
+        result = matrix - 3;
+
+        test_matrix_equal(result,expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( subtract_and_assign_scalar_test )
+    {
+        Matrix matrix;
+        Matrix expected;
+
+        matrix.set( {   5.0, 2.0,
+                        0.0, 1.0
+                    },
+                    2, 2 );
+
+        expected.set( {  0.0, -3.0,
+                        -5.0, -4.0
+                    },
+                    2, 2 );
+
+        matrix -= 5;
+
+        test_matrix_equal(matrix,expected);
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

@@ -23,6 +23,7 @@
 - matrix * scalar and matrix *= scalar
 - matrix / scalar and matrix /= scalar
 - matrix + scalar and matrix += scalar
+- matrix - scalar and matrix -= scalar
 - matrix * matrix
 - matrix + matrix
 - matrix - matrix
