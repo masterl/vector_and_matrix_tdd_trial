@@ -25,3 +25,4 @@ Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this 
     - Minors
     - Identity matrix
     - Transposed
+    - Cofactors matrix

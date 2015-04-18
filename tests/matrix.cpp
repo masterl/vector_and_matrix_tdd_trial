@@ -447,5 +447,28 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         test_matrix_equal(matrix, expected);
     }
 
+    BOOST_AUTO_TEST_CASE( get_cofactor_matrix_test )
+    {
+        Matrix matrix;
+        Matrix cofactor_matrix;
+        Matrix expected;
+
+        matrix.set( {   1.0, 2.0, 3.0,
+                        0.0, 4.0, 5.0,
+                        1.0, 0.0, 6.0
+                    },
+                    3, 3);
+
+        expected.set( {  24.0,  5.0, -4.0,
+                        -12.0,  3.0,  2.0,
+                         -2.0, -5.0,  4.0
+                    },
+                    3, 3);
+
+        cofactor_matrix = matrix.cofactor_matrix();
+
+        test_matrix_equal(cofactor_matrix, expected);
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

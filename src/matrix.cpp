@@ -186,6 +186,27 @@ Matrix& Matrix::transpose(void)
     return (*this);
 }
 
+Matrix Matrix::cofactor_matrix(void)
+{
+    Matrix cofactors;
+
+    cofactors.reset_dimensions(_dimensions.first,_dimensions.second);
+
+    for(position_t i = 0; i < _dimensions.first; ++i)
+    {
+        for(position_t j = 0; j < _dimensions.second; ++j)
+        {
+            cofactors[i][j] = this->generate_minor(i,j).determinant();
+            if( ((i + j) % 2 ) == 1)
+            {
+                cofactors[i][j] = -cofactors[i][j];
+            }
+        }
+    }
+
+    return cofactors;
+}
+
 Matrix Matrix::inverse(void)
 {
     Matrix inverse_matrix;
