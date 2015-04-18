@@ -12,6 +12,7 @@ class Matrix
 {
     public:
         Matrix(void);
+        Matrix(Matrix const &other);
         void reset_dimensions(position_t const &lines,position_t const &columns);
         MatrixDimensions dimensions(void) const;
         value_t determinant(void) const;
@@ -23,6 +24,9 @@ class Matrix
         value_t const * operator[](int const &line) const;
 
         Matrix operator*(Matrix const &other) const;
+        // Matrix operator*(value_t const &scalar) const;
+
+        Matrix operator=(Matrix const &other);
     private:
         MatrixDimensions _dimensions;
         std::unique_ptr<value_t[]> _data;

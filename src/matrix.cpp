@@ -14,6 +14,20 @@ Matrix::Matrix(void):
 {
 }
 
+Matrix::Matrix(Matrix const &other):
+    _dimensions(std::make_pair(0,0))
+{
+    reset_dimensions(other.dimensions().first,other.dimensions().second);
+
+    for(position_t line = 0; line < _dimensions.first; ++line)
+    {
+        for(position_t column = 0; column < _dimensions.first; ++column)
+        {
+            (*this)[line][column] = other[line][column];
+        }
+    }
+}
+
 void Matrix::set(std::initializer_list<value_t> values,position_t const &lines,position_t const &columns)
 {
     typename std::initializer_list<value_t>::iterator it = values.begin();
@@ -176,13 +190,13 @@ Matrix Matrix::operator*(Matrix const &other) const
 
     result.reset_dimensions(_dimensions.first,other_dimensions.second);
 
-    for(unsigned int i = 0; i < _dimensions.first; ++i)
+    for(position_t i = 0; i < _dimensions.first; ++i)
     {
-        for(unsigned int j = 0; j < other_dimensions.second; ++j)
+        for(position_t j = 0; j < other_dimensions.second; ++j)
         {
             sum = 0.0;
 
-            for(unsigned int k = 0; k < other_dimensions.second; ++k)
+            for(position_t k = 0; k < other_dimensions.second; ++k)
             {
                 sum += (*this)[i][k] * other[k][j];
             }
@@ -192,4 +206,34 @@ Matrix Matrix::operator*(Matrix const &other) const
     }
 
     return result;
+}
+
+// Matrix Matrix::operator*(value_t const &scalar) const
+// {
+//     Matrix result = *this;
+
+//     for(position_t line = 0; line < _dimensions.first; ++line)
+//     {
+//         for(position_t column = 0; column < _dimensions.first; ++column)
+//         {
+//             result[line][column] *= scalar;
+//         }
+//     }
+
+//     return result;
+// }
+
+Matrix Matrix::operator=(Matrix const &other)
+{
+    reset_dimensions(other.dimensions().first,other.dimensions().second);
+
+    for(position_t line = 0; line < _dimensions.first; ++line)
+    {
+        for(position_t column = 0; column < _dimensions.first; ++column)
+        {
+            (*this)[line][column] = other[line][column];
+        }
+    }
+
+    return *this;
 }
