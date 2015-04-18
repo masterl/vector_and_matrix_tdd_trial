@@ -19,7 +19,7 @@ void test_matrix_equal(Matrix const &values,Matrix const &expected)
 
         msg = "\nCalculated matrix: ";
         msg += std::to_string(values_dimensions.first) + "x" + std::to_string(values_dimensions.second);
-        msg = "\n  Expected matrix: ";
+        msg += "\n  Expected matrix: ";
         msg += std::to_string(expected_dimensions.first) + "x" + std::to_string(expected_dimensions.second);
         throw std::range_error("Matrix dimensions differ!" + msg + "\n");
     }
@@ -390,6 +390,61 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
                     2, 2);
 
         BOOST_REQUIRE_THROW( matrix.inverse(), std::domain_error );
+    }
+
+    BOOST_AUTO_TEST_CASE( get_transposed_matrix_test )
+    {
+        Matrix matrix;
+        Matrix expected;
+
+        matrix.set( {   1.0, 2.0, 3.0,
+                        4.0, 5.0, 6.0,
+                        7.0, 8.0, 9.0
+                    },
+                    3, 3);
+
+        expected.set( { 1.0, 4.0, 7.0,
+                        2.0, 5.0, 8.0,
+                        3.0, 6.0, 9.0
+                    },
+                    3, 3);
+
+        test_matrix_equal(matrix.transposed(), expected);
+
+        matrix.set( {   1.0, 2.0, 3.0,
+                        4.0, 5.0, 6.0
+                    },
+                    2, 3);
+
+        expected.set( { 1.0, 4.0,
+                        2.0, 5.0,
+                        3.0, 6.0
+                    },
+                    3, 2);
+
+        test_matrix_equal(matrix.transposed(), expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( transpose_matrix_test )
+    {
+        Matrix matrix;
+        Matrix expected;
+
+        matrix.set( {   1.0, 2.0, 3.0,
+                        4.0, 5.0, 6.0,
+                        7.0, 8.0, 9.0
+                    },
+                    3, 3);
+
+        expected.set( { 1.0, 4.0, 7.0,
+                        2.0, 5.0, 8.0,
+                        3.0, 6.0, 9.0
+                    },
+                    3, 3);
+
+        matrix.transpose();
+
+        test_matrix_equal(matrix, expected);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

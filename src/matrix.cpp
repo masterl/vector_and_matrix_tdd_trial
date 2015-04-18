@@ -163,6 +163,29 @@ bool Matrix::is_zero(value_t const &value) const
     return (absolute < 0.00001);
 }
 
+Matrix Matrix::transposed(void) const
+{
+    Matrix transposed;
+    transposed.reset_dimensions(_dimensions.second,_dimensions.first);
+
+    for(position_t i = 0; i < _dimensions.first; ++i)
+    {
+        for(position_t j = 0; j < _dimensions.second; ++j)
+        {
+            transposed[j][i] = (*this)[i][j];
+        }
+    }
+
+    return transposed;
+}
+
+Matrix& Matrix::transpose(void)
+{
+    (*this) = this->transposed();
+
+    return (*this);
+}
+
 Matrix Matrix::inverse(void)
 {
     Matrix inverse_matrix;

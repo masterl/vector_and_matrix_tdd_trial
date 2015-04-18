@@ -24,3 +24,4 @@ Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this 
 - Generates:
     - Minors
     - Identity matrix
+    - Transposed
