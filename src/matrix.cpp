@@ -163,6 +163,23 @@ bool Matrix::is_zero(value_t const &value) const
     return (absolute < 0.00001);
 }
 
+Matrix Matrix::inverse(void)
+{
+    Matrix inverse_matrix;
+
+    if(_dimensions.first != _dimensions.second)
+    {
+        throw std::domain_error("Matrix should be square to have an inverse!");
+    }
+
+    if(is_zero(this->determinant()))
+    {
+        throw std::domain_error("Matrix's determinant should be different than 0 to have and inverse!");
+    }
+
+    return inverse_matrix;
+}
+
 Matrix Matrix::identity_matrix(position_t const &lines,position_t const &columns)
 {
     Matrix identity;

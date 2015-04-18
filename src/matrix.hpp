@@ -20,6 +20,8 @@ class Matrix
 
         Matrix generate_minor(position_t const &line,position_t const &column) const;
 
+        Matrix inverse(void);
+
         static Matrix identity_matrix(position_t const &lines,position_t const &columns);
 
         value_t * operator[](int const &line);

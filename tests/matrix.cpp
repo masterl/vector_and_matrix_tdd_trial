@@ -371,5 +371,26 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
         test_matrix_equal(matrix,expected);
     }
 
+    BOOST_AUTO_TEST_CASE( throw_domain_error_for_invalid_dimensions_inverse_test )
+    {
+        Matrix matrix;
+
+        matrix.reset_dimensions(1,4);
+
+        BOOST_REQUIRE_THROW( matrix.inverse(), std::domain_error );
+    }
+
+    BOOST_AUTO_TEST_CASE( throw_domain_error_for_zero_determinant_inverse_test )
+    {
+        Matrix matrix;
+
+        matrix.set( {   0.0, 0.0,
+                        0.0, 0.0
+                    },
+                    2, 2);
+
+        BOOST_REQUIRE_THROW( matrix.inverse(), std::domain_error );
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */
