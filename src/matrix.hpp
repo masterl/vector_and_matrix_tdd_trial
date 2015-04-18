@@ -24,7 +24,7 @@ class Matrix
         Matrix& transpose(void);
         Matrix cofactor_matrix(void);
         Matrix adjoint_matrix(void);
-        Matrix inverse(void);
+        Matrix generate_inverse(void);
 
         static Matrix identity_matrix(position_t const &lines,position_t const &columns);
 
@@ -34,6 +34,8 @@ class Matrix
         Matrix operator*(Matrix const &other) const;
         Matrix operator*(value_t const &scalar) const;
         Matrix& operator*=(value_t const &scalar);
+        Matrix operator/(value_t const &scalar) const;
+        Matrix& operator/=(value_t const &scalar);
 
         Matrix& operator=(Matrix const &other);
     private:

@@ -212,7 +212,7 @@ Matrix Matrix::adjoint_matrix(void)
     return this->cofactor_matrix().transpose();
 }
 
-Matrix Matrix::inverse(void)
+Matrix Matrix::generate_inverse(void)
 {
     Matrix inverse_matrix;
 
@@ -319,6 +319,34 @@ Matrix& Matrix::operator*=(value_t const &scalar)
         for(position_t column = 0; column < _dimensions.first; ++column)
         {
             (*this)[line][column] *= scalar;
+        }
+    }
+
+    return *this;
+}
+
+Matrix Matrix::operator/(value_t const &scalar) const
+{
+    Matrix result = *this;
+
+    for(position_t line = 0; line < _dimensions.first; ++line)
+    {
+        for(position_t column = 0; column < _dimensions.first; ++column)
+        {
+            result[line][column] /= scalar;
+        }
+    }
+
+    return result;
+}
+
+Matrix& Matrix::operator/=(value_t const &scalar)
+{
+    for(position_t line = 0; line < _dimensions.first; ++line)
+    {
+        for(position_t column = 0; column < _dimensions.first; ++column)
+        {
+            (*this)[line][column] /= scalar;
         }
     }
 

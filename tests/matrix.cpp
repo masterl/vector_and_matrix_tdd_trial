@@ -377,7 +377,7 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
 
         matrix.reset_dimensions(1,4);
 
-        BOOST_REQUIRE_THROW( matrix.inverse(), std::domain_error );
+        BOOST_REQUIRE_THROW( matrix.generate_inverse(), std::domain_error );
     }
 
     BOOST_AUTO_TEST_CASE( throw_domain_error_for_zero_determinant_inverse_test )
@@ -389,7 +389,7 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
                     },
                     2, 2);
 
-        BOOST_REQUIRE_THROW( matrix.inverse(), std::domain_error );
+        BOOST_REQUIRE_THROW( matrix.generate_inverse(), std::domain_error );
     }
 
     BOOST_AUTO_TEST_CASE( get_transposed_matrix_test )
@@ -492,6 +492,70 @@ BOOST_AUTO_TEST_SUITE( MATRIX_CLASS_TEST_SUITE )
 
         test_matrix_equal(adjoint_matrix, expected);
     }
+
+    BOOST_AUTO_TEST_CASE( divide_by_scalar_test )
+    {
+        Matrix matrix;
+        Matrix result;
+        Matrix expected;
+
+        matrix.set( {   5.0, 2.0,
+                        0.0, 1.0
+                    },
+                    2, 2 );
+
+        expected.set( { 2.5, 1.0,
+                        0.0, 0.5
+                    },
+                    2, 2 );
+
+        result = matrix / 2;
+
+        test_matrix_equal(result,expected);
+    }
+
+    BOOST_AUTO_TEST_CASE( divide_and_assign_by_scalar_test )
+    {
+        Matrix matrix;
+        Matrix expected;
+
+        matrix.set( {   5.0, 2.0,
+                        0.0, 1.0
+                    },
+                    2, 2 );
+
+        expected.set( { 1.25, 0.5,
+                         0.0, 0.25
+                    },
+                    2, 2 );
+
+        matrix /= 4;
+
+        test_matrix_equal(matrix,expected);
+    }
+
+    // BOOST_AUTO_TEST_CASE( get_inverse_matrix_test )
+    // {
+    //     Matrix matrix;
+    //     Matrix inverse_matrix;
+    //     Matrix expected;
+
+    //     matrix.set( {   3.0, 0.0,  2.0,
+    //                     2.0, 0.0, -2.0,
+    //                     0.0, 1.0,  1.0
+    //                 },
+    //                 3, 3);
+
+    //     expected.set( {  0.2,  0.2, 0.0,
+    //                     -0.2,  0.3, 1.0,
+    //                      0.2, -0.3, 0.0
+    //                 },
+    //                 3, 3);
+
+    //     inverse_matrix = matrix.generate_inverse();
+
+    //     test_matrix_equal(inverse_matrix, expected);
+    // }
 
 BOOST_AUTO_TEST_SUITE_END()
 /* src/Vector test suite end */

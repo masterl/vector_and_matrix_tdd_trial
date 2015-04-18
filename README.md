@@ -8,8 +8,10 @@
 - **Boost**
 - **C++11 compiler** *(makefile sets -std=c++14, but it's easily changed)*
   - I used g++ 4.9.1
-
-Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this is just some practice programming.
+#### Notes:
+- Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this is just some practice programming.
+- Mostly naive implementation.
+- I gave almost no care to performance
 
 #### Vector
 - A great deal has already been done!
@@ -19,6 +21,7 @@ Don't be too harsh, I know I kinda didn't follow TDD directives fully, but this 
 #### Matrix
 - Matrix can be acessed by matrix[line][column]
 - matrix * scalar and matrix *= scalar
+- matrix / scalar and matrix /= scalar
 - matrix2 = matrix1
 - Determinant for NxN done
 - Generates:
