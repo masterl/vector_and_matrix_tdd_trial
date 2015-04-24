@@ -16,6 +16,17 @@
 
 #### Vector
 - A great deal has already been done!
+- Vector can be accessed by vector[position]
+- This is a class template, example use:
+   - Vector<3,double> vec; *this creates a tridimensional vector of doubles
+- Operations defined:
+    - initializer_list constructor
+    - vector.dimensions() **returns how many dimensions the vector has**
+    - vector * vector **dot product**
+    - vector.dot(vector) **dot product**
+    - vector.cross(vector) **cross product**
+    - vector.set({1,2,3,...}) **set ignores extra elements after all dimensions are set**
+
 - ***Class only compiles for if Scalar == float, double or long double***
 
 #### Matrix
