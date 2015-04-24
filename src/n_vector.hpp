@@ -10,15 +10,15 @@ typedef unsigned int position_t;
 typedef double scalar_t;
 
 template <position_t DIMENSIONS,typename T = double >
-class Vector
+class NVector
 {
     public:
-        Vector<DIMENSIONS,T>(void)
+        NVector<DIMENSIONS,T>(void)
         {
             _coordinates.fill(0);
         }
 
-        Vector<DIMENSIONS,T>(Vector<DIMENSIONS,T> const &other)
+        NVector<DIMENSIONS,T>(NVector<DIMENSIONS,T> const &other)
         {
             for(position_t i = 0; i < other._coordinates.size(); ++i)
             {
@@ -26,7 +26,7 @@ class Vector
             }
         }
 
-        Vector<DIMENSIONS,T>(std::initializer_list<T> values)
+        NVector<DIMENSIONS,T>(std::initializer_list<T> values)
         {
             this->set(values);
         }
@@ -57,7 +57,7 @@ class Vector
             }
         }
 
-        scalar_t distance_to(Vector<DIMENSIONS,T> const &other) const
+        scalar_t distance_to(NVector<DIMENSIONS,T> const &other) const
         {
             scalar_t distance = 0.0;
             scalar_t diff;
@@ -75,7 +75,7 @@ class Vector
             return distance;
         }
 
-        scalar_t dot(Vector<DIMENSIONS,T> const &other) const
+        scalar_t dot(NVector<DIMENSIONS,T> const &other) const
         {
             scalar_t product = 0.0;
 
@@ -87,7 +87,7 @@ class Vector
             return product;
         }
 
-        scalar_t cross(Vector<2,T> const &other) const
+        scalar_t cross(NVector<2,T> const &other) const
         {
             scalar_t product = 0.0;
 
@@ -97,9 +97,9 @@ class Vector
             return product;
         }
 
-        Vector<3,T> cross(Vector<3,T> const &other) const
+        NVector<3,T> cross(NVector<3,T> const &other) const
         {
-            Vector<3,T> result;
+            NVector<3,T> result;
             T up, down;
             const position_t size = _coordinates.size();
 
@@ -114,12 +114,12 @@ class Vector
             return result;
         }
 
-        scalar_t operator*(Vector<DIMENSIONS,T> const &other) const
+        scalar_t operator*(NVector<DIMENSIONS,T> const &other) const
         {
             return dot(other);
         }
 
-        Vector<DIMENSIONS,T> operator=(Vector<DIMENSIONS,T> const &other)
+        NVector<DIMENSIONS,T> operator=(NVector<DIMENSIONS,T> const &other)
         {
             for(position_t i = 0; i < other._coordinates.size(); ++i)
             {
