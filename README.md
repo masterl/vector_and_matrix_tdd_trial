@@ -42,3 +42,4 @@
     - Inverse matrix
 
 - Many refactors are needed and will be done.
+- Most duplicated code has been removed!
