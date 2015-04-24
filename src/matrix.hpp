@@ -3,6 +3,7 @@
 
 #include <utility>
 #include <memory>
+#include <algorithm>
 
 typedef unsigned int position_t;
 typedef double value_t;
@@ -54,6 +55,23 @@ class Matrix
         value_t inner_determinant(Matrix const &matrix) const;
 
         bool is_zero(value_t const &value) const;
+
+        template <typename Function>
+        void iterate_self(Function function)
+        {
+            Matrix &matrix = *this;
+            MatrixDimensions dimensions;
+
+            dimensions = matrix.dimensions();
+
+            for(position_t i = 0; i < dimensions.first; ++i)
+            {
+                for(position_t j = 0; j < dimensions.second; ++j)
+                {
+                    function(matrix[i][j]);
+                }
+            }
+        }
 };
 
 #endif

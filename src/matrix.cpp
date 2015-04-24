@@ -395,13 +395,7 @@ Matrix Matrix::operator*(value_t const &scalar) const
 
 Matrix& Matrix::operator*=(value_t const &scalar)
 {
-    for(position_t line = 0; line < _dimensions.first; ++line)
-    {
-        for(position_t column = 0; column < _dimensions.first; ++column)
-        {
-            (*this)[line][column] *= scalar;
-        }
-    }
+    iterate_self([scalar](value_t &elem) -> void { elem *= scalar; });
 
     return *this;
 }
@@ -423,13 +417,7 @@ Matrix Matrix::operator/(value_t const &scalar) const
 
 Matrix& Matrix::operator/=(value_t const &scalar)
 {
-    for(position_t line = 0; line < _dimensions.first; ++line)
-    {
-        for(position_t column = 0; column < _dimensions.first; ++column)
-        {
-            (*this)[line][column] /= scalar;
-        }
-    }
+    iterate_self([scalar](value_t &elem) -> void { elem /= scalar; });
 
     return *this;
 }
@@ -451,13 +439,7 @@ Matrix Matrix::operator+(value_t const &scalar) const
 
 Matrix& Matrix::operator+=(value_t const &scalar)
 {
-    for(position_t line = 0; line < _dimensions.first; ++line)
-    {
-        for(position_t column = 0; column < _dimensions.first; ++column)
-        {
-            (*this)[line][column] += scalar;
-        }
-    }
+    iterate_self([scalar](value_t &elem) -> void { elem += scalar; });
 
     return *this;
 }
@@ -479,13 +461,7 @@ Matrix Matrix::operator-(value_t const &scalar) const
 
 Matrix& Matrix::operator-=(value_t const &scalar)
 {
-    for(position_t line = 0; line < _dimensions.first; ++line)
-    {
-        for(position_t column = 0; column < _dimensions.first; ++column)
-        {
-            (*this)[line][column] -= scalar;
-        }
-    }
+    iterate_self([scalar](value_t &elem) -> void { elem -= scalar; });
 
     return *this;
 }
