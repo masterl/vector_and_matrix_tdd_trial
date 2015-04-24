@@ -16,9 +16,7 @@
 
 #### Vector
 - A great deal has already been done!
-- ***Class only compiles for if T == float, double or long double***
-- Couldn't figure out yet how to limit class to floating point without creating dummy pointer _class_enable...
-- I'll refactor this in the near future.
+- ***Class only compiles for if Scalar == float, double or long double***
 
 #### Matrix
 - Matrix can be acessed by matrix[line][column]
