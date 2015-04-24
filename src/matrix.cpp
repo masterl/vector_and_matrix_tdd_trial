@@ -346,17 +346,7 @@ Matrix Matrix::operator-(Matrix const &other) const
 
 Matrix Matrix::operator*(value_t const &scalar) const
 {
-    Matrix result = *this;
-
-    for(position_t line = 0; line < _dimensions.first; ++line)
-    {
-        for(position_t column = 0; column < _dimensions.first; ++column)
-        {
-            result[line][column] *= scalar;
-        }
-    }
-
-    return result;
+    return derive_from_self( [scalar](value_t const &this_elem) -> value_t { return this_elem * scalar; } );
 }
 
 Matrix& Matrix::operator*=(value_t const &scalar)
@@ -368,17 +358,7 @@ Matrix& Matrix::operator*=(value_t const &scalar)
 
 Matrix Matrix::operator/(value_t const &scalar) const
 {
-    Matrix result = *this;
-
-    for(position_t line = 0; line < _dimensions.first; ++line)
-    {
-        for(position_t column = 0; column < _dimensions.first; ++column)
-        {
-            result[line][column] /= scalar;
-        }
-    }
-
-    return result;
+    return derive_from_self( [scalar](value_t const &this_elem) -> value_t { return this_elem / scalar; } );
 }
 
 Matrix& Matrix::operator/=(value_t const &scalar)
@@ -390,17 +370,7 @@ Matrix& Matrix::operator/=(value_t const &scalar)
 
 Matrix Matrix::operator+(value_t const &scalar) const
 {
-    Matrix result = *this;
-
-    for(position_t line = 0; line < _dimensions.first; ++line)
-    {
-        for(position_t column = 0; column < _dimensions.first; ++column)
-        {
-            result[line][column] += scalar;
-        }
-    }
-
-    return result;
+    return derive_from_self( [scalar](value_t const &this_elem) -> value_t { return this_elem + scalar; } );
 }
 
 Matrix& Matrix::operator+=(value_t const &scalar)
@@ -412,17 +382,7 @@ Matrix& Matrix::operator+=(value_t const &scalar)
 
 Matrix Matrix::operator-(value_t const &scalar) const
 {
-    Matrix result = *this;
-
-    for(position_t line = 0; line < _dimensions.first; ++line)
-    {
-        for(position_t column = 0; column < _dimensions.first; ++column)
-        {
-            result[line][column] -= scalar;
-        }
-    }
-
-    return result;
+    return derive_from_self( [scalar](value_t const &this_elem) -> value_t { return this_elem - scalar; } );
 }
 
 Matrix& Matrix::operator-=(value_t const &scalar)

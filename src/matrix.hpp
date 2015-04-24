@@ -57,7 +57,7 @@ class Matrix
         bool is_zero(value_t const &value) const;
 
         template <typename Function>
-        void iterate_self(Function function)
+        void iterate_self(Function &&function)
         {
             Matrix &matrix = *this;
             MatrixDimensions dimensions;
@@ -74,7 +74,7 @@ class Matrix
         }
 
         template <typename Function>
-        Matrix iterate_with_other(Matrix const &other,Function function) const
+        Matrix iterate_with_other(Matrix const &other,Function &&function) const
         {
             Matrix result;
             Matrix const &matrix = *this;
@@ -88,6 +88,26 @@ class Matrix
                 for(position_t j = 0; j < dimensions.second; ++j)
                 {
                     result[i][j] = function(matrix[i][j],other[i][j]);
+                }
+            }
+
+            return result;
+        }
+
+        template <typename Function>
+        Matrix derive_from_self(Function &&function) const
+        {
+            Matrix result;
+            MatrixDimensions dimensions;
+
+            dimensions = this->dimensions();
+            result.reset_dimensions(dimensions.first,dimensions.second);
+
+            for(position_t i = 0; i < dimensions.first; ++i)
+            {
+                for(position_t j = 0; j < dimensions.second; ++j)
+                {
+                    result[i][j] = function((*this)[i][j]);
                 }
             }
 
