@@ -301,7 +301,6 @@ Matrix Matrix::operator*(Matrix const &other) const
 
 Matrix Matrix::operator/(Matrix const &other) const
 {
-    Matrix result;
     MatrixDimensions other_dimensions;
 
     other_dimensions = other.dimensions();
@@ -312,22 +311,11 @@ Matrix Matrix::operator/(Matrix const &other) const
         throw std::domain_error("Matrix dimensions differ! Both matrixes should be NxM!");
     }
 
-    result.reset_dimensions(_dimensions.first,other_dimensions.second);
-
-    for(position_t i = 0; i < _dimensions.first; ++i)
-    {
-        for(position_t j = 0; j < other_dimensions.second; ++j)
-        {
-            result[i][j] = (*this)[i][j] / other[i][j];
-        }
-    }
-
-    return result;
+    return iterate_with_other(other,[](value_t this_elem,value_t other_elem) -> value_t { return this_elem / other_elem; });
 }
 
 Matrix Matrix::operator+(Matrix const &other) const
 {
-    Matrix result;
     MatrixDimensions other_dimensions;
 
     other_dimensions = other.dimensions();
@@ -338,23 +326,11 @@ Matrix Matrix::operator+(Matrix const &other) const
         throw std::domain_error("Matrix dimensions differ! Both matrixes should be NxM!");
     }
 
-    result.reset_dimensions(_dimensions.first,_dimensions.second);
-
-    for(position_t i = 0; i < _dimensions.first; ++i)
-    {
-        for(position_t j = 0; j < _dimensions.second; ++j)
-        {
-            result[i][j] = (*this)[i][j] + other[i][j];
-        }
-    }
-
-    return result;
+    return iterate_with_other(other,[](value_t this_elem,value_t other_elem) -> value_t { return this_elem + other_elem; });
 }
 
 Matrix Matrix::operator-(Matrix const &other) const
 {
-    Matrix result;
-
     MatrixDimensions other_dimensions;
 
     other_dimensions = other.dimensions();
@@ -365,17 +341,7 @@ Matrix Matrix::operator-(Matrix const &other) const
         throw std::domain_error("Matrix dimensions differ! Both matrixes should be NxM!");
     }
 
-    result.reset_dimensions(_dimensions.first,_dimensions.second);
-
-    for(position_t i = 0; i < _dimensions.first; ++i)
-    {
-        for(position_t j = 0; j < _dimensions.second; ++j)
-        {
-            result[i][j] = (*this)[i][j] - other[i][j];
-        }
-    }
-
-    return result;
+    return iterate_with_other(other,[](value_t this_elem,value_t other_elem) -> value_t { return this_elem - other_elem; });
 }
 
 Matrix Matrix::operator*(value_t const &scalar) const

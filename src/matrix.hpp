@@ -72,6 +72,27 @@ class Matrix
                 }
             }
         }
+
+        template <typename Function>
+        Matrix iterate_with_other(Matrix const &other,Function function) const
+        {
+            Matrix result;
+            Matrix const &matrix = *this;
+            MatrixDimensions dimensions;
+
+            dimensions = matrix.dimensions();
+            result.reset_dimensions(dimensions.first,dimensions.second);
+
+            for(position_t i = 0; i < dimensions.first; ++i)
+            {
+                for(position_t j = 0; j < dimensions.second; ++j)
+                {
+                    result[i][j] = function(matrix[i][j],other[i][j]);
+                }
+            }
+
+            return result;
+        }
 };
 
 #endif
