@@ -163,6 +163,19 @@ bool Matrix::is_zero(value_t const &value) const
     return (absolute < 0.00001);
 }
 
+void Matrix::assert_dimensions_match(Matrix const &other) const
+{
+    MatrixDimensions other_dimensions;
+
+    other_dimensions = other.dimensions();
+
+    if( (_dimensions.first != other_dimensions.first) ||
+        (_dimensions.second != other_dimensions.second) )
+    {
+        throw std::domain_error("Matrix dimensions differ! Both matrixes should be NxM!");
+    }
+}
+
 Matrix Matrix::transposed(void) const
 {
     Matrix transposed;
@@ -301,45 +314,21 @@ Matrix Matrix::operator*(Matrix const &other) const
 
 Matrix Matrix::operator/(Matrix const &other) const
 {
-    MatrixDimensions other_dimensions;
-
-    other_dimensions = other.dimensions();
-
-    if( (_dimensions.first != other_dimensions.first) ||
-        (_dimensions.second != other_dimensions.second) )
-    {
-        throw std::domain_error("Matrix dimensions differ! Both matrixes should be NxM!");
-    }
+    assert_dimensions_match(other);
 
     return iterate_with_other(other,[](value_t this_elem,value_t other_elem) -> value_t { return this_elem / other_elem; });
 }
 
 Matrix Matrix::operator+(Matrix const &other) const
 {
-    MatrixDimensions other_dimensions;
-
-    other_dimensions = other.dimensions();
-
-    if( (_dimensions.first != other_dimensions.first) ||
-        (_dimensions.second != other_dimensions.second) )
-    {
-        throw std::domain_error("Matrix dimensions differ! Both matrixes should be NxM!");
-    }
+    assert_dimensions_match(other);
 
     return iterate_with_other(other,[](value_t this_elem,value_t other_elem) -> value_t { return this_elem + other_elem; });
 }
 
 Matrix Matrix::operator-(Matrix const &other) const
 {
-    MatrixDimensions other_dimensions;
-
-    other_dimensions = other.dimensions();
-
-    if( (_dimensions.first != other_dimensions.first) ||
-        (_dimensions.second != other_dimensions.second) )
-    {
-        throw std::domain_error("Matrix dimensions differ! Both matrixes should be NxM!");
-    }
+    assert_dimensions_match(other);
 
     return iterate_with_other(other,[](value_t this_elem,value_t other_elem) -> value_t { return this_elem - other_elem; });
 }

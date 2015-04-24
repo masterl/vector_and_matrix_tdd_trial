@@ -55,6 +55,7 @@ class Matrix
         value_t inner_determinant(Matrix const &matrix) const;
 
         bool is_zero(value_t const &value) const;
+        void assert_dimensions_match(Matrix const &other) const;
 
         template <typename Function>
         void iterate_self(Function &&function)
