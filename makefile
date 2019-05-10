@@ -3,187 +3,161 @@
 #   =======================
 #
 
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#	Some helpers:
-#--------------------------------------------------------------------------
-empty =
-tab = $(empty)$(shell printf '\t')$(empty)
-
-define execute-command
-$(tab)$(1)
-
-endef
+include .functions.mk
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#	Compiler:
+# Compilers:
 #--------------------------------------------------------------------------
-CC = g++
+# Override if needed:
+CC := gcc
+CXX := g++
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#	Directories for linking
+# Directories for linking
 #--------------------------------------------------------------------------
-# ======== GERAL ========
-LIBDIR = -L/usr/lib
-LOCALLIBDIR =  -L/usr/local/lib
-VIDYAPREFIXLIBDIR = -L/usr/local/vidya/libs
+# ======== GENERAL ========
+LIBDIR := -L/usr/lib
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#	Compilation flags
+# Compilation flags
 #--------------------------------------------------------------------------
-#PGFLAG = -lpq
-#ALLBOOSTFLAGS = -lboost_locale -lpthread -lboost_thread -lboost_filesystem -lboost_system -lboost_regex -lboost_serialization -lboost_random
-#ALLENDFLAGS = -lssl -lcrypto -lz -ldl -lmhash -lcurl
-GENERALSTARTFLAGS = -Wall -std=c++14
+
+# Flags for the C compiler.
+CFLAGS := -Wall
+
+# Flags for the C++ compiler.
+CXXFLAGS := -Wall -std=c++14
+CXXFLAGS += -isystem $(PROJECT_ROOT)/vendor
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Linker flags
+#--------------------------------------------------------------------------
+# ==== SOME KNOWN FLAGS (might be incomplete) ====
+#PGFLAGS = -lpq
+#BOOSTFLAGS = -lboost_locale -lpthread -lboost_thread -lboost_filesystem -lboost_system -lboost_regex -lboost_serialization -lboost_random
+#MISCFLAGS = -lssl -lcrypto -lz -ldl -lmhash -lcurl
+#GOOGLETESTFLAGS = -lgmock_main -lgmock -lgtest
 #STACKTRACEFLAGS = -rdynamic
-#ALLCOMPFLAGS = $(GENERALSTARTFLAGS) `pkg-config gtkmm-3.0 --cflags`
-ALLCOMPFLAGS = $(GENERALSTARTFLAGS)
+#PTHREADFLAG = -lpthread
 
-#LINKFLAGS = `pkg-config gtkmm-3.0 --libs` -lboost_system -lboost_filesystem
-#LINKFLAGS = -lglut -lGLEW -lGL -lboost_filesystem -lboost_system
-LINKFLAGS =
-
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#	Sources directories
-#--------------------------------------------------------------------------
-# ======== main ========
-MAINDIR = src
-
-UTILSDIR = utils
-
+#LINKFLAGS := -lboost_filesystem -lboost_system
 ifeq ($(MAKECMDGOALS),test)
-	TESTSDIR = tests
-	_ALLSRCDIRLIST = $(MAINDIR) $(UTILSDIR) $(TESTSDIR)
-else
-	_ALLSRCDIRLIST = $(MAINDIR) $(UTILSDIR)
+	TESTFLAGS :=
 endif
 
+LINKFLAGS += $(TESTFLAGS)
+
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#	Dependencies and object directories
+# Sources directories
 #--------------------------------------------------------------------------
-DEPDIR = deps
+# Specify main source directory (which contains the main source file)
+MAINDIR := src
+# Name of main file
+MAINFILE := $(call get_main_file)
 
-DEPDIRLIST = $(addsuffix /$(DEPDIR),$(_ALLSRCDIRLIST))
+$(info main file: $(MAINFILE))
+$(info goal: $(MAKECMDGOALS))
 
-DEPSUFFIX = _dep
+# All source directories (except test files directory)
+SOURCEDIRS := $(MAINDIR)
 
-#----====----====----====----====----
-OBJDIR = objs
+UNPROCESSEDDIRLIST := $(SOURCEDIRS)
 
-OBJDIRLIST = $(addsuffix /$(OBJDIR),$(_ALLSRCDIRLIST))
+ifeq ($(MAKECMDGOALS),test)
+	TESTSDIR := tests
+	CFLAGS += -iquote $(PROJECT_ROOT)/src
+	CXXFLAGS += -iquote $(PROJECT_ROOT)/src
+	UNPROCESSEDDIRLIST += $(TESTSDIR)
+endif
+
+_ALLSRCDIRLIST := $(call get_processed_directories_trees_list,$(UNPROCESSEDDIRLIST))
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Object directories
+#--------------------------------------------------------------------------
+OBJDIRLIST := $(call get_objects_directories,$(_ALLSRCDIRLIST))
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Sources list
 #--------------------------------------------------------------------------
-# ALLSRCFILES = $(foreach dir,$(_ALLSRCDIRLIST),$(wildcard $(dir)/*.cpp))
+ALLSRCFILES := $(foreach dir,$(_ALLSRCDIRLIST),$(call get_folder_source_files_list,$(dir)))
 
+# Main file should be removed from list when testing
 ifeq ($(MAKECMDGOALS),test)
-	ALLSRCFILES = $(filter-out $(foreach dir,$(_ALLSRCDIRLIST),$(wildcard $(dir)/*.cpp)) , $(MAINDIR)/main.cpp)
-	MAINFILES = $(filter-out $(MAINDIR)/main.cpp , $(wildcard $(MAINDIR)/*.cpp) )
-	TESTSFILES = $(wildcard $(TESTSDIR)/*.cpp)
+$(info removing main file...)
+	ALLSRCFILES := $(filter-out $(MAINFILE),$(ALLSRCFILES))
 endif
 
-ifeq ($(MAKECMDGOALS),exec)
-	ALLSRCFILES = $(foreach dir,$(_ALLSRCDIRLIST),$(wildcard $(dir)/*.cpp))
-	MAINFILES = $(wildcard $(MAINDIR)/*.cpp)
-endif
-
-UTILSFILES = $(wildcard $(UTILSDIR)/*.cpp)
+$(info $(ALLSRCFILES))
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# Dependencies Lists
+# Object files list
 #--------------------------------------------------------------------------
-#   Dependencias dos .o
-MAINDEPS := $(addprefix $(MAINDIR)/$(DEPDIR)/,$(patsubst %.cpp,%.d,$(notdir $(MAINFILES))))
-UTILSDEPS := $(addprefix $(UTILSDIR)/$(DEPDIR)/,$(patsubst %.cpp,%.d,$(notdir $(UTILSFILES))))
-TESTSDEPS := $(addprefix $(TESTSDIR)/$(DEPDIR)/,$(patsubst %.cpp,%.d,$(notdir $(TESTSFILES))))
-
-#   Dependencias dos .d
-MAINDEPDEPS := $(subst .d,$(DEPSUFFIX).d,$(MAINDEPS))
-UTILSDEPDEPS := $(subst .d,$(DEPSUFFIX).d,$(UTILSDEPS))
-TESTSDEPDEPS := $(subst .d,$(DEPSUFFIX).d,$(TESTSDEPS))
-
-
-ALLDEPDEPS :=	$(MAINDEPDEPS) $(UTILSDEPDEPS) $(TESTSDEPDEPS)
+ALLOBJS := $(call get_objects_from_sources_list,$(ALLSRCFILES))
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# Object Lists
+# Main compiler
 #--------------------------------------------------------------------------
-MAINOBJS := $(addprefix $(MAINDIR)/$(OBJDIR)/,$(patsubst %.cpp,%.o,$(notdir $(MAINFILES))))
-UTILSOBJS := $(addprefix $(UTILSDIR)/$(OBJDIR)/,$(patsubst %.cpp,%.o,$(notdir $(UTILSFILES))))
-TESTSOBJS := $(addprefix $(TESTSDIR)/$(OBJDIR)/,$(patsubst %.cpp,%.o,$(notdir $(TESTSFILES))))
-
-
-ALLOBJS :=	$(MAINOBJS) $(UTILSOBJS) $(TESTSOBJS)
+MAIN_COMPILER := $(call get_main_compiler)
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# Executable
+# Main flags
+#--------------------------------------------------------------------------
+MAIN_FLAGS := $(if $(call is_cpp_project),$(CXXFLAGS),$(CFLAGS))
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Executable definitions
 #--------------------------------------------------------------------------
 EXEC := vectormatrix
 TESTEXEC := test
 
 BINDIR := bin
 
-export CC
-export ALLCOMPFLAGS
-export LOCALLIBDIR
-export DEPDIR
+export CFLAGS
+export CXXFLAGS
 export OBJDIR
-export DEPSUFFIX
-export ALLDEPDEPS
-export ALLOBJS
-
-all:
-	@echo -e '\n\n==================== ERROR ===================='
-	@echo -e '   --------------------------------------------'
-	@echo "   |        There's no default rule!           |"
-	@echo -e '   --------------------------------------------'
-	@echo -e '   Choose an option:\n'
-	@echo -e '\texec\t    [compiles main executable]'
-	@echo -e '\tclean\t\t    [erases all files]'
-	@echo -e '===============================================\n\n'
 
 exec: rmexec allobjs FORCE | $(BINDIR)
-	$(CC) $(ALLOBJS) $(ALLCOMPFLAGS) -o $(BINDIR)/$(EXEC) $(LINKFLAGS)
+	$(MAIN_COMPILER) $(ALLOBJS) $(MAIN_FLAGS) -o $(BINDIR)/$(EXEC) $(LINKFLAGS)
 	@echo -e '=----------------------------------------------------='
-	@echo -e '=           $(EXEC) generated/updated           ='
+	@echo -e '=           executable generated/updated             ='
 	@echo -e '=           Executable: $(BINDIR)/$(EXEC)  \t     ='
 	@echo -e '=----------------------------------------------------=\n\n'
+
+help:
+	@echo -e '\n'
+	@echo -e '======================= HELP ========================\n'
+	@echo -e '   Options:\n'
+	@echo -e '      make exec            [compiles main executable]'
+	@echo -e '      make clean         [erases all generated files]'
+	@echo -e '=====================================================\n\n'
 
 test: compiletest
 	@echo -e 'Executing tests...\n'
 	@set -e;./$(BINDIR)/$(TESTEXEC) --log_level=message --build_info=yes --show_progress=true
 
 compiletest: rmtest allobjs FORCE | $(BINDIR)
-	$(CC) $(ALLOBJS) $(ALLCOMPFLAGS) -o $(BINDIR)/$(TESTEXEC) $(LINKFLAGS)
+	$(MAIN_COMPILER) $(ALLOBJS) $(MAIN_FLAGS) -o $(BINDIR)/$(TESTEXEC) $(LINKFLAGS)
 	@echo -e '=----------------------------------------------------='
 	@echo -e '=           TESTS generated/updated                  ='
 	@echo -e '=           Executable: $(BINDIR)/$(TESTEXEC)  \t\t     ='
 	@echo -e '=----------------------------------------------------=\n\n'
 
-allobjs: objdirs alldeps
-	@set -e; $(MAKE) --no-print-directory -f makeobjs allobjs
-
-#aobjsdebian: objdirs adeps
-#	@set -e; $(MAKE) --no-print-directory -f makeobjs allobjs PGINCDIR=$(PGDEBIANINCDIR) PGLIBDIR=$(PGDEBIANLIBDIR)
-
-#aobjscentos: objdirs adeps
-#	@set -e; $(MAKE) --no-print-directory -f makeobjs allobjs PGINCDIR=$(PGCENTOSINCDIR) PGLIBDIR=$(PGCENTOSLIBDIR)
-
-alldeps: depdirs
-	@set -e; $(MAKE) --no-print-directory -f makedeps alldeps
-
-depdirs: | $(DEPDIRLIST)
+allobjs: objdirs $(ALLOBJS)
 	@echo -e '------------------------------------------------------'
-	@echo -e '\tDependencies directories created/checked!\n'
+	@echo -e '\tObjects updated!\n'
+
+$(ALLOBJS): FORCE
+	@set -e; $(MAKE) --no-print-directory -f makeobj.mk TARGET=$@
 
 objdirs: | $(OBJDIRLIST)
 	@echo -e '------------------------------------------------------'
 	@echo -e '\tObjects directories created/checked!\n'
 
-$(DEPDIRLIST) $(OBJDIRLIST) $(BINDIR):
+$(OBJDIRLIST) $(BINDIR):
 	mkdir $@
 
-clean: rmdeps rmobjs rmexec FORCE
+clean: rmobjs rmexec FORCE
 	rm -rf $(BINDIR)
 	@echo -e '------------------------------------------------------'
 	@echo -e '\tAll files removed!\n\n'
@@ -198,14 +172,11 @@ rmtest:
 	@echo -e '------------------------------------------------------'
 	@echo -e '\tTest executable removed!'
 
-rmdeps: FORCE
-	$(foreach dir, $(DEPDIRLIST) tests/$(DEPDIR), $(call execute-command, rm -rf $(dir) ) )
-
 rmobjs: FORCE
 	$(foreach dir, $(OBJDIRLIST) tests/$(OBJDIR), $(call execute-command, rm -rf $(dir) ) )
-	
+
 FORCE:
 
-#  ===================================
-#  ||    VIDYA MAKE FILE >FIM<      ||
-#  ===================================
+#  ===========================
+#  ||    MAKEFILE >END<      ||
+#  ===========================
