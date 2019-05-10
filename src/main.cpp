@@ -5,7 +5,7 @@ int main( void )
     using std::cout;
     using std::endl;
 
-    cout << "MAIN PRINCIPAL" << endl;
+    cout << "MAIN EXECUTED" << endl;
 
     return 0;
 }
